@@ -2,7 +2,7 @@
 
 A Next.js application to play with [**Faker.js**](https://fakerjs.dev/) 🪄
 
-👉 [**LIVE APPLICATION HERE**](#) 🚀
+👉 [**LIVE APPLICATION HERE**](https://faker-playground.vercel.app/) 🚀
 
 ![Faker Playground Screenshot](./public/images/faker-playground.png)
 
