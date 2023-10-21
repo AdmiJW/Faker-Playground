@@ -13,5 +13,8 @@ type Actions = {
 
 export const useDarkModeStore = create<State & Actions>()((set) => ({
     isDarkMode: false,
-    setDarkMode: (isDarkMode) => set({ isDarkMode }),
+    setDarkMode: (isDarkMode) => {
+        localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
+        set({ isDarkMode });
+    },
 }));

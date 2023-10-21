@@ -1,6 +1,7 @@
 'use client';
 
 import { Paper, Tooltip, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useSelectedHeaderStore } from '@/core/states/selectedHeader';
 import { MdInfo } from '@react-icons/all-files/md/MdInfo';
 
@@ -24,17 +25,19 @@ export function FakerSection({
         setSelectedHeader(id);
     };
 
+    const primaryColor = useTheme().palette.primary.main;
+
     return (
         <Paper className='mx-3 my-2 bg-opacity-20 p-4 backdrop-blur-sm'>
-            <Typography
-                color='primary'
+            <div
+                style={{ color: primaryColor }}
                 className='flex items-center gap-3 pb-6'
                 onClick={setSelectedHeaderToThis}
                 onMouseEnter={setSelectedHeaderToThis}
             >
-                <h2 id={id} className='text-2xl font-bold'>
+                <Typography id={id} className='text-2xl font-bold'>
                     {title}
-                </h2>
+                </Typography>
 
                 <Tooltip title={tooltip ?? ''}>
                     <span className='cursor-pointer text-xl'>
@@ -51,7 +54,7 @@ export function FakerSection({
                 >
                     #
                 </a>
-            </Typography>
+            </div>
 
             <div className='flex flex-col gap-4 md:flex-row'>{children}</div>
         </Paper>
