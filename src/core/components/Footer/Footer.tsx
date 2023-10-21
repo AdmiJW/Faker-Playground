@@ -1,6 +1,11 @@
+import { Typography } from '@mui/material';
+
 export function Footer() {
     return (
-        <div className='p-6 text-center font-semibold'>
+        <Typography
+            color='textPrimary'
+            className='p-6 text-center font-semibold'
+        >
             Made with ❤️ by{' '}
             <a
                 href='https://github.com/AdmiJW'
@@ -9,6 +14,6 @@ export function Footer() {
             >
                 AdmiJW
             </a>
-        </div>
+        </Typography>
     );
 }

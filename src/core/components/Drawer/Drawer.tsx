@@ -1,6 +1,12 @@
 'use client';
 
-import { Drawer as MuiDrawer, IconButton } from '@mui/material';
+import {
+    Drawer as MuiDrawer,
+    IconButton,
+    Typography,
+    Box,
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useWindowDimension } from '@/core/hooks/useWindowDimension';
 import { MdKeyboardDoubleArrowLeft } from '@react-icons/all-files/md/MdKeyboardDoubleArrowLeft';
 import { DrawerList } from './DrawerList';
@@ -18,6 +24,8 @@ export function Drawer() {
     const isLargeScreen = width >= BREAKPOINT;
     const occupyWidth = isOpen ? DRAWER_WIDTH : 0;
 
+    const primaryColor = useTheme().palette.primary.main;
+
     return (
         <>
             <MuiDrawer
@@ -30,18 +38,21 @@ export function Drawer() {
                 }}
             >
                 {/* Header */}
-                <div className='flex flex-col bg-primary p-4 shadow-md'>
+                <Box
+                    className='flex flex-col p-4 shadow-md'
+                    sx={{ backgroundColor: primaryColor }}
+                >
                     <div className='text-right'>
-                        <IconButton onClick={close}>
-                            <MdKeyboardDoubleArrowLeft className='text-white' />
+                        <IconButton onClick={close} className='text-white'>
+                            <MdKeyboardDoubleArrowLeft />
                         </IconButton>
                     </div>
                     <div className='pt-10'>
-                        <span className='text-xl font-bold text-white'>
+                        <Typography className='text-xl font-bold' color='white'>
                             Faker Playground
-                        </span>
+                        </Typography>
                     </div>
-                </div>
+                </Box>
 
                 {/* Drawer Content */}
                 <div className='flex-1 overflow-y-auto'>

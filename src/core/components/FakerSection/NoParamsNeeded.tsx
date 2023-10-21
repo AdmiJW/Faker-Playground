@@ -1,7 +1,12 @@
+import { Typography } from '@mui/material';
+
 export function NoParamsNeeded() {
     return (
-        <div className='hidden flex-1 items-center justify-center text-lg font-light text-gray-400 lg:flex'>
+        <Typography
+            className='hidden flex-1 items-center justify-center text-lg font-light lg:flex'
+            color='textPrimary'
+        >
             <span className='ml-2'>No parameters needed 👊</span>
-        </div>
+        </Typography>
     );
 }

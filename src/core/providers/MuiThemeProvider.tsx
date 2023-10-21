@@ -7,7 +7,7 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import { muiTheme } from '@core/muiTheme';
+import { useMuiTheme } from '@core/hooks/useMuiTheme';
 
 /// * Please reference: https://mui.com/material-ui/guides/next-js-app-router/
 
@@ -61,6 +61,8 @@ export function MuiThemeProvider({
             />
         );
     });
+
+    const muiTheme = useMuiTheme();
 
     return (
         <CacheProvider value={cache}>
