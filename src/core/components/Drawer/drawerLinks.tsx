@@ -17,7 +17,6 @@ import { MdMusicNote } from '@react-icons/all-files/md/MdMusicNote';
 import { MdNumbers } from '@react-icons/all-files/md/MdNumbers';
 import { MdPerson4 } from '@react-icons/all-files/md/MdPerson4';
 import { MdPhone } from '@react-icons/all-files/md/MdPhone';
-import { BsFillDice6Fill } from '@react-icons/all-files/bs/BsFillDice6Fill';
 import { MdScience } from '@react-icons/all-files/md/MdScience';
 import { MdShortText } from '@react-icons/all-files/md/MdShortText';
 import { MdSettings } from '@react-icons/all-files/md/MdSettings';
