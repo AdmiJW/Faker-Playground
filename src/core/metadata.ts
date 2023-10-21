@@ -6,4 +6,7 @@ export const metadata: Metadata = {
     viewport: 'width=device-width, initial-scale=1',
     authors: [{ name: 'AdmiJW' }],
     keywords: ['faker.js', 'faker', 'playground', 'fake data'],
+    other: {
+        'darkreader-lock': 'true',
+    },
 };
