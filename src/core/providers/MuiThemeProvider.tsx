@@ -36,6 +36,17 @@ function deriveTheme(isDarkMode: boolean) {
                 textTransform: 'none',
             },
         },
+        components: {
+            MuiDrawer: {
+                styleOverrides: {
+                    paper: {
+                        backgroundColor: isDarkMode
+                            ? 'rgba(51,51,51,1)'
+                            : 'rgba(255,255,255,1)',
+                    },
+                },
+            },
+        },
     });
 }
 

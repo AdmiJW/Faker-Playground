@@ -18,7 +18,7 @@ export function Navbar() {
 
     return (
         <Paper
-            className='sticky top-3 z-50 m-3 flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm backdrop-blur-sm'
+            className='sticky top-3 z-50 m-3 flex items-center gap-4 rounded-xl px-4 py-2 shadow-lg backdrop-blur-sm'
             variant='outlined'
         >
             <IconButton onClick={toggle} size='large' color='primary'>
