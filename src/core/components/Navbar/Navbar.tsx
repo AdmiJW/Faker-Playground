@@ -75,8 +75,8 @@ export function Navbar() {
                     <MenuItem onClick={() => onChangeLocale('en')}>
                         English
                     </MenuItem>
-                    <MenuItem onClick={() => onChangeLocale('zh')}>
-                        中文
+                    <MenuItem onClick={() => onChangeLocale('zh_CN')}>
+                        简体中文
                     </MenuItem>
                 </Menu>
 

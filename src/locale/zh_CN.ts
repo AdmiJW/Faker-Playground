@@ -1,4 +1,4 @@
-export const zhDict = {
+export const zhCnDict = {
     title: '虚假内容生成器乐园',
     navbar: {
         language: '语言',

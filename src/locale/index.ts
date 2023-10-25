@@ -4,10 +4,12 @@ import { useEffect } from 'react';
 import { create } from 'zustand';
 
 import { enDict } from './en';
-import { zhDict } from './zh';
+import { zhCnDict } from './zh_CN';
 
-export type Locale = 'en' | 'zh';
-export type Dict = typeof enDict | typeof zhDict;
+export type Locale = 'en' | 'zh_CN';
+export type Dict = typeof enDict | typeof zhCnDict;
+
+const locales: Locale[] = ['en', 'zh_CN'];
 
 type State = {
     locale: Locale;
@@ -15,12 +17,12 @@ type State = {
 };
 
 type Actions = {
-    changeLocale: (locale: 'en' | 'zh') => void;
+    changeLocale: (locale: Locale) => void;
 };
 
 const dictMap: Record<Locale, Dict> = {
     en: enDict,
-    zh: zhDict,
+    zh_CN: zhCnDict,
 };
 
 export const useLocaleStore = create<State & Actions>()((set) => ({
@@ -37,7 +39,8 @@ export function useInitializeLocale() {
 
     useEffect(() => {
         const isSavedLocale = localStorage.getItem('locale');
-        if (!isSavedLocale || !['zh', 'en'].includes(isSavedLocale)) return;
+        if (!isSavedLocale || !locales.includes(isSavedLocale as Locale))
+            return;
         setLocale(isSavedLocale as Locale);
     }, [setLocale]);
 }
