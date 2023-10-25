@@ -1,1 +1,5 @@
-export { DatabasePage as default } from '@feat/fakerjs/Database';
+import { DatabasePage } from '@feat/fakerjs/Database';
+
+export default function Database() {
+    return <DatabasePage />;
+}

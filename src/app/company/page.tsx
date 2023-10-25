@@ -1,1 +1,5 @@
-export { CompanyPage as default } from '@feat/fakerjs/Company';
+import { CompanyPage } from '@feat/fakerjs/Company';
+
+export default function Company() {
+    return <CompanyPage />;
+}

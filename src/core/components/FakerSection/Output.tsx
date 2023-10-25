@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Button, Paper, CircularProgress } from '@mui/material';
 import JsonView from 'react18-json-view';
 
+import { useDict } from '@locale';
+
 import 'react18-json-view/src/style.css';
 import 'react18-json-view/src/dark.css';
 
@@ -21,6 +23,7 @@ export function Output({
     output ??= '';
 
     const isDarkMode = useTheme().palette.mode === 'dark';
+    const t = useDict().fakerSection;
 
     return (
         <div className='relative flex flex-1 flex-col gap-2'>
@@ -46,7 +49,7 @@ export function Output({
                     className='text-white'
                     onClick={onFake}
                 >
-                    Fake!
+                    {t.generateButton}
                 </Button>
             </div>
         </div>

@@ -8,11 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
-
-const tooltip = `
-    Generates a random record locator. Record locators are used by airlines to identify reservations. 
-    They're also known as booking reference numbers, locator codes, confirmation codes, or reservation codes.
-`;
+import { useDict } from '@locale';
 
 const Schema = z.object({
     allowNumeric: z.boolean(),
@@ -23,6 +19,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.airline.recordLocator>;
 
 export function RecordLocator() {
+    const t = useDict().airline.recordLocator;
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({
@@ -38,29 +36,25 @@ export function RecordLocator() {
                     values.allowVisuallySimilarCharacters,
             });
             setOutput(recordLocator);
-            toast.success('Faked record locator!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Record Locator'
-            id='record-locator'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='record-locator' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col'>
                 <Checkbox
                     checked={formik.values.allowNumeric}
-                    label='Allow Numeric'
-                    tooltip='Whether to allow numeric characters.'
+                    label={t.allowNumericLabel}
+                    tooltip={t.allowNumericTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue('allowNumeric', newValue)
                     }
                 />
                 <Checkbox
                     checked={formik.values.allowVisuallySimilarCharacters}
-                    label='Allow Visually Similar Characters'
-                    tooltip="Whether to allow visually similar characters such as '1' and 'I'."
+                    label={t.allowVisuallySimilarCharactersLabel}
+                    tooltip={t.allowVisuallySimilarCharactersTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue(
                             'allowVisuallySimilarCharacters',

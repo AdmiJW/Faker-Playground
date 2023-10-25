@@ -1,1 +1,5 @@
-export { ColorPage as default } from '@feat/fakerjs/Color';
+import { ColorPage } from '@feat/fakerjs/Color';
+
+export default function Color() {
+    return <ColorPage />;
+}

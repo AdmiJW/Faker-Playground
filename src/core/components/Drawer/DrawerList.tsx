@@ -9,6 +9,7 @@ import {
     ListItemText,
     Collapse,
 } from '@mui/material';
+import { useDict } from '@locale';
 
 import type { DrawerLink } from './drawerLinks';
 
@@ -20,7 +21,7 @@ export function DrawerList({
     depth?: number;
 }) {
     const listItems = links.map((link) => (
-        <DrawerListItem key={link.text} link={link} depth={depth} />
+        <DrawerListItem key={link.key} link={link} depth={depth} />
     ));
 
     return (
@@ -48,11 +49,13 @@ function SingleDrawerListItem({
     const pathname = usePathname();
     const isSelected = pathname === link.path;
 
+    const t = useDict().drawer;
+
     return (
         <Link href={link.path}>
             <ListItemButton sx={{ pl: depth * 2 }} selected={isSelected}>
                 {link.logo && <ListItemIcon>{link.logo}</ListItemIcon>}
-                <ListItemText primary={link.text} />
+                <ListItemText primary={t[link.key]} />
             </ListItemButton>
         </Link>
     );
@@ -71,6 +74,8 @@ function NestedDrawerListItem({
     const [isOpen, setIsOpen] = useState(isSelected);
     const toggle = () => setIsOpen((prev) => !prev);
 
+    const t = useDict().drawer;
+
     return (
         <>
             <ListItemButton
@@ -79,7 +84,7 @@ function NestedDrawerListItem({
                 selected={isSelected}
             >
                 {link.logo && <ListItemIcon>{link.logo}</ListItemIcon>}
-                <ListItemText primary={link.text} />
+                <ListItemText primary={t[link.key]} />
                 <MdExpandMore
                     className={`transition-transform ${isOpen && 'rotate-180'}`}
                 />

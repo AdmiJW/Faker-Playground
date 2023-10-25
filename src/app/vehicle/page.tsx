@@ -1,1 +1,5 @@
-export { VehiclePage as default } from '@feat/fakerjs/Vehicle';
+import { VehiclePage } from '@feat/fakerjs/Vehicle';
+
+export default function Vehicle() {
+    return <VehiclePage />;
+}

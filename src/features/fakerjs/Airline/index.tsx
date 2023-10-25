@@ -1,3 +1,5 @@
+'use client';
+
 import { AircraftType } from './AircraftType';
 import { Airline } from './Airline';
 import { Airplane } from './Airplane';
@@ -7,11 +9,13 @@ import { RecordLocator } from './RecordLocator';
 import { Seat } from './Seat';
 
 import { PageTitle } from '@/core/components/FakerSection';
+import { useDict } from '@locale';
 
 export function AirlinePage() {
+    const t = useDict().airline;
     return (
         <>
-            <PageTitle title='Airline ✈️' />
+            <PageTitle title={t.title} />
 
             <AircraftType />
             <Airline />

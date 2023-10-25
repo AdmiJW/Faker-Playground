@@ -1,1 +1,5 @@
-export { PersonPage as default } from '@feat/fakerjs/Person';
+import { PersonPage } from '@feat/fakerjs/Person';
+
+export default function Person() {
+    return <PersonPage />;
+}

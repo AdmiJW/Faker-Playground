@@ -1,1 +1,5 @@
-export { HackerPage as default } from '@feat/fakerjs/Hacker';
+import { HackerPage } from '@feat/fakerjs/Hacker';
+
+export default function Hacker() {
+    return <HackerPage />;
+}

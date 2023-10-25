@@ -1,1 +1,5 @@
-export { LocationPage as default } from '@feat/fakerjs/Location';
+import { LocationPage } from '@feat/fakerjs/Location';
+
+export default function Location() {
+    return <LocationPage />;
+}

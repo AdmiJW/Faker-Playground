@@ -1,1 +1,5 @@
-export { WordPage as default } from '@feat/fakerjs/Word';
+import { WordPage } from '@feat/fakerjs/Word';
+
+export default function Word() {
+    return <WordPage />;
+}

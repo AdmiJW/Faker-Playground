@@ -22,7 +22,10 @@ export function Slider({
 }) {
     return (
         <div className='flex items-center gap-2'>
-            <Typography className='mt-2 flex items-center gap-2' gutterBottom>
+            <Typography
+                className='mt-2 flex items-center gap-2 whitespace-nowrap'
+                gutterBottom
+            >
                 {label}
             </Typography>
             <MuiSlider

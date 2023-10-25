@@ -8,8 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
-
-const tooltip = `Generates a random seat.`;
+import { useDict } from '@locale';
 
 const Schema = z.object({
     aircraftType: z.enum(['narrowbody', 'regional', 'widebody']),
@@ -19,6 +18,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.airline.seat>;
 
 export function Seat() {
+    const t = useDict().airline.seat;
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({
@@ -31,24 +32,24 @@ export function Seat() {
                 aircraftType: values.aircraftType,
             });
             setOutput(seat);
-            toast.success('Faked seat!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Seat' id='seat' tooltip={tooltip}>
+        <FakerSection title={t.title} id='seat' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Select
-                    label='Aircraft Type'
+                    label={t.aircraftTypeLabel}
                     value={formik.values.aircraftType}
                     onChange={formik.handleChange}
                     name='aircraftType'
                     options={[
-                        { value: 'narrowbody', label: 'Narrowbody' },
-                        { value: 'regional', label: 'Regional' },
-                        { value: 'widebody', label: 'Widebody' },
+                        { value: 'narrowbody', label: t.optionNarrowBody },
+                        { value: 'regional', label: t.optionWideBody },
+                        { value: 'widebody', label: t.optionWideBody },
                     ]}
-                    tooltip='The aircraft type.'
+                    tooltip={t.aircraftTypeTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

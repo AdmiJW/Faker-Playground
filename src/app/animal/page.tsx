@@ -1,1 +1,5 @@
-export { AnimalPage as default } from '@feat/fakerjs/Animal';
+import { AnimalPage } from '@feat/fakerjs/Animal';
+
+export default function Animal() {
+    return <AnimalPage />;
+}

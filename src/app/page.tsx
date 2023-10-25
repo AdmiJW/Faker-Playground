@@ -1,1 +1,5 @@
-export { HomePage as default } from '@feat/fakerjs/Home';
+import { HomePage } from '@feat/fakerjs/Home';
+
+export default function Home() {
+    return <HomePage />;
+}

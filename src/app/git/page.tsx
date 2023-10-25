@@ -1,1 +1,5 @@
-export { GitPage as default } from '@feat/fakerjs/Git';
+import { GitPage } from '@feat/fakerjs/Git';
+
+export default function Git() {
+    return <GitPage />;
+}

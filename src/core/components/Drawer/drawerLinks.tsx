@@ -23,8 +23,10 @@ import { MdSettings } from '@react-icons/all-files/md/MdSettings';
 import { MdDirectionsCarFilled } from '@react-icons/all-files/md/MdDirectionsCarFilled';
 import { MdTextFields } from '@react-icons/all-files/md/MdTextFields';
 
+import type { Dict } from '@locale';
+
 export type DrawerLink = {
-    text: string;
+    key: keyof Dict['drawer'];
     path: string;
     logo?: React.ReactNode;
     children?: DrawerLink[];
@@ -32,122 +34,122 @@ export type DrawerLink = {
 
 export const drawerLinks: DrawerLink[] = [
     {
-        text: 'Airline',
+        key: 'airline',
         path: '/airline',
         logo: <MdAirplanemodeActive />,
     },
     {
-        text: 'Animal',
+        key: 'animal',
         path: '/animal',
         logo: <BiSolidDog />,
     },
     {
-        text: 'Color',
+        key: 'color',
         path: '/color',
         logo: <BsFillPaletteFill />,
     },
     {
-        text: 'Commerce',
+        key: 'commerce',
         path: '/commerce',
         logo: <MdShoppingCart />,
     },
     {
-        text: 'Company',
+        key: 'company',
         path: '/company',
         logo: <MdBusiness />,
     },
     {
-        text: 'Database',
+        key: 'database',
         path: '/database',
         logo: <FaDatabase />,
     },
     {
-        text: 'Datatype',
+        key: 'datatype',
         path: '/datatype',
         logo: <AiOutlineFieldBinary />,
     },
     {
-        text: 'Date',
+        key: 'date',
         path: '/date',
         logo: <MdCalendarMonth />,
     },
     {
-        text: 'Finance',
+        key: 'finance',
         path: '/finance',
         logo: <MdAttachMoney />,
     },
     {
-        text: 'Git',
+        key: 'git',
         path: '/git',
         logo: <IoMdGitBranch />,
     },
     {
-        text: 'Hacker',
+        key: 'hacker',
         path: '/hacker',
         logo: <FaMask />,
     },
     {
-        text: 'Image',
+        key: 'image',
         path: '/image',
         logo: <MdImage />,
     },
     {
-        text: 'Internet',
+        key: 'internet',
         path: '/internet',
         logo: <BsGlobe />,
     },
     {
-        text: 'Location',
+        key: 'location',
         path: '/location',
         logo: <MdLocationOn />,
     },
     {
-        text: 'Lorem',
+        key: 'lorem',
         path: '/lorem',
         logo: <MdOutlineTextSnippet />,
     },
     {
-        text: 'Music',
+        key: 'music',
         path: '/music',
         logo: <MdMusicNote />,
     },
     {
-        text: 'Number',
+        key: 'number',
         path: '/number',
         logo: <MdNumbers />,
     },
     {
-        text: 'Person',
+        key: 'person',
         path: '/person',
         logo: <MdPerson4 />,
     },
     {
-        text: 'Phone',
+        key: 'phone',
         path: '/phone',
         logo: <MdPhone />,
     },
     {
-        text: 'Science',
+        key: 'science',
         path: '/science',
         logo: <MdScience />,
     },
     {
-        text: 'String',
+        key: 'string',
         path: '/string',
         logo: <MdShortText />,
     },
     {
-        text: 'System',
+        key: 'system',
         path: '/system',
         logo: <MdSettings />,
     },
     {
-        text: 'Vehicle',
+        key: 'vehicle',
         path: '/vehicle',
         logo: <MdDirectionsCarFilled />,
     },
     {
-        text: 'Word',
+        key: 'word',
         path: '/word',
         logo: <MdTextFields />,
     },

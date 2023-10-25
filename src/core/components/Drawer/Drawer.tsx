@@ -9,6 +9,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { useWindowDimension } from '@/core/hooks/useWindowDimension';
 import { MdKeyboardDoubleArrowLeft } from '@react-icons/all-files/md/MdKeyboardDoubleArrowLeft';
+import { useDict } from '@locale';
 import { DrawerList } from './DrawerList';
 import { useDrawerStore } from './state';
 import { drawerLinks } from './drawerLinks';
@@ -25,6 +26,8 @@ export function Drawer() {
     const occupyWidth = isOpen ? DRAWER_WIDTH : 0;
 
     const primaryColor = useTheme().palette.primary.main;
+
+    const t = useDict();
 
     return (
         <>
@@ -49,7 +52,7 @@ export function Drawer() {
                     </div>
                     <div className='pt-10'>
                         <Typography className='text-xl font-bold' color='white'>
-                            Faker Playground
+                            {t.title}
                         </Typography>
                     </div>
                 </Box>

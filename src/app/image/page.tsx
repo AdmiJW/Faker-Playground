@@ -1,1 +1,5 @@
-export { ImagePage as default } from '@feat/fakerjs/Image';
+import { ImagePage } from '@feat/fakerjs/Image';
+
+export default function Image() {
+    return <ImagePage />;
+}

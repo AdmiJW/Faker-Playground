@@ -1,1 +1,5 @@
-export { NumberPage as default } from '@feat/fakerjs/Number';
+import { NumberPage } from '@feat/fakerjs/Number';
+
+export default function Number() {
+    return <NumberPage />;
+}

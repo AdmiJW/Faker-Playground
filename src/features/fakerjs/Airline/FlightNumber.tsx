@@ -13,13 +13,7 @@ import {
     Checkbox,
     Slider,
 } from '@core/components/FakerSection';
-
-const tooltip = `
-    Returns a random flight number. 
-    Flight numbers are always 1 to 4 digits long.
-    Sometimes they are used without leading zeros (e.g.: American Airlines flight 425) and
-    sometimes with leading zeros, often with the airline code prepended (e.g.: AA0425).
-`;
+import { useDict } from '@locale';
 
 const Schema = z.object({
     addLeadingZeroes: z.boolean(),
@@ -30,6 +24,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.airline.flightNumber>;
 
 export function FlightNumber() {
+    const t = useDict().airline.flightNumber;
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({
@@ -44,34 +40,30 @@ export function FlightNumber() {
                 length: { min: values.minMax[0], max: values.minMax[1] },
             });
             setOutput(flightNumber);
-            toast.success('Faked flight number!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Flight Number'
-            id='flight-number'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='flight-number' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Checkbox
                     checked={formik.values.addLeadingZeroes}
-                    label='Add Leading Zeroes'
-                    tooltip='Whether to pad the flight number up to 4 digits with leading zeros.'
+                    label={t.addLeadingZeroesLabel}
+                    tooltip={t.addLeadingZeroesTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue('addLeadingZeroes', newValue)
                     }
                 />
                 <Slider
-                    label='Length'
+                    label={t.lengthLabel}
                     name='minMax'
                     value={formik.values.minMax}
                     onChange={formik.handleChange}
                     min={1}
                     max={4}
                     step={1}
-                    tooltip='The number or range of digits to generate.'
+                    tooltip={t.lengthTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

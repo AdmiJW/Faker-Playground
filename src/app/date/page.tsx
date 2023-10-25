@@ -1,1 +1,5 @@
-export { DatePage as default } from '@feat/fakerjs/Date';
+import { DatePage } from '@feat/fakerjs/Date';
+
+export default function Date() {
+    return <DatePage />;
+}

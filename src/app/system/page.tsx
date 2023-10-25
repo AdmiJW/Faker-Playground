@@ -1,1 +1,5 @@
-export { SystemPage as default } from '@feat/fakerjs/System';
+import { SystemPage } from '@feat/fakerjs/System';
+
+export default function System() {
+    return <SystemPage />;
+}

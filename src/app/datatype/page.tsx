@@ -1,1 +1,5 @@
-export { DatatypePage as default } from '@feat/fakerjs/Datatype';
+import { DatatypePage } from '@feat/fakerjs/Datatype';
+
+export default function Datatype() {
+    return <DatatypePage />;
+}

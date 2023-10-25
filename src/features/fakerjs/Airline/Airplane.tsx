@@ -8,21 +8,22 @@ import {
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
-
-const tooltip = 'Generates a random airplane.';
+import { useDict } from '@locale';
 
 type Output = ReturnType<typeof faker.airline.airplane>;
 
 export function Airplane() {
+    const t = useDict().airline.airplane;
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.airline.airplane());
-        toast.success('Faked airplane!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Airplane' id='airplane' tooltip={tooltip}>
+        <FakerSection title={t.title} id='airplane' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

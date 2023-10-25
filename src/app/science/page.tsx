@@ -1,1 +1,5 @@
-export { SciencePage as default } from '@feat/fakerjs/Science';
+import { SciencePage } from '@feat/fakerjs/Science';
+
+export default function Science() {
+    return <SciencePage />;
+}

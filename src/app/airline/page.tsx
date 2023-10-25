@@ -1,1 +1,5 @@
-export { AirlinePage as default } from '@feat/fakerjs/Airline';
+import { AirlinePage } from '@feat/fakerjs/Airline';
+
+export default function Airline() {
+    return <AirlinePage />;
+}
