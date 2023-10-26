@@ -14,6 +14,7 @@ import {
     Checkbox,
     Slider,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random image url provided via https://picsum.photos.`;
 
@@ -28,6 +29,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.urlPicsumPhotos>;
 
 export function UrlPicsumPhotos() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

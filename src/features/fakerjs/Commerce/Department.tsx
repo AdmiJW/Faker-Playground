@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a department inside a shop.`;
 
 type Output = ReturnType<typeof faker.commerce.department>;
 
 export function Department() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

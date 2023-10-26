@@ -8,12 +8,15 @@ import {
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random avatar image url.`;
 
 type Output = ReturnType<typeof faker.image.avatar>;
 
 export function Avatar() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

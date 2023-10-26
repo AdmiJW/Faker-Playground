@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 import { create } from 'zustand';
+import { faker as fakerEn } from '@faker-js/faker';
+import { faker as fakerZhCn } from '@faker-js/faker/locale/zh_CN';
 
 import { enDict } from './en';
 import { zhCnDict } from './zh_CN';
@@ -14,6 +16,7 @@ const locales: Locale[] = ['en', 'zh_CN'];
 type State = {
     locale: Locale;
     dict: typeof enDict;
+    faker: typeof fakerEn;
 };
 
 type Actions = {
@@ -25,12 +28,22 @@ const dictMap: Record<Locale, Dict> = {
     zh_CN: zhCnDict,
 };
 
+const fakerMap: Record<Locale, typeof fakerEn> = {
+    en: fakerEn,
+    zh_CN: fakerZhCn,
+};
+
 export const useLocaleStore = create<State & Actions>()((set) => ({
     locale: 'en',
     dict: enDict,
+    faker: fakerEn,
     changeLocale: (locale) => {
         localStorage.setItem('locale', locale);
-        set({ locale, dict: dictMap[locale] });
+        set({
+            locale,
+            dict: dictMap[locale],
+            faker: fakerMap[locale],
+        });
     },
 }));
 
@@ -47,3 +60,4 @@ export function useInitializeLocale() {
 
 export const useLocale = () => useLocaleStore((state) => state.locale);
 export const useDict = () => useLocaleStore((state) => state.dict);
+export const useFaker = () => useLocaleStore((state) => state.faker);

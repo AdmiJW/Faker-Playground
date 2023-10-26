@@ -13,6 +13,7 @@ import {
     TextInput,
     Checkbox,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates an email address using an example mail provider using the given person's name as base.`;
 
@@ -26,6 +27,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.exampleEmail>;
 
 export function ExampleEmail() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

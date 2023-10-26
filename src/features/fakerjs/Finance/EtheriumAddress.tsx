@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import toast from 'react-hot-toast';
+
 import {
     FakerSection,
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `
     Creates a random, non-checksum Ethereum address. To generate a checksummed Ethereum address (with specific per character casing), 
@@ -17,6 +19,8 @@ const tooltip = `
 type Output = ReturnType<typeof faker.finance.ethereumAddress>;
 
 export function EtheriumAddress() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

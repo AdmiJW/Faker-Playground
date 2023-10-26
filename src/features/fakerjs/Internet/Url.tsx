@@ -13,6 +13,7 @@ import {
     Select,
     Checkbox,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random http(s) url.`;
 
@@ -25,6 +26,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.url>;
 
 export function Url() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

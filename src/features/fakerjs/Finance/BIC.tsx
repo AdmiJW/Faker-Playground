@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random SWIFT/BIC code based on the ISO-9362 format.`;
 
@@ -19,6 +20,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.bic>;
 
 export function BIC() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

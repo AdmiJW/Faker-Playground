@@ -14,6 +14,7 @@ import {
     Checkbox,
     TextInput,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns an RGB color.`;
 
@@ -28,6 +29,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.rgb>;
 
 export function Rgb() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

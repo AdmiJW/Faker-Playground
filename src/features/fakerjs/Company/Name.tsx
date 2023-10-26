@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random company name.`;
 
 type Output = ReturnType<typeof faker.company.name>;
 
 export function Name() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

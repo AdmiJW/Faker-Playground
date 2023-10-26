@@ -14,6 +14,7 @@ import {
     DatePicker,
     zodDate,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a date string for a git commit using the same format as git log.`;
 
@@ -25,6 +26,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.git.commitDate>;
 
 export function CommitDate() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

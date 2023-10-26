@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
-import { useDict } from '@locale';
+import { useDict, useFaker } from '@locale';
 
 const Schema = z.object({
     allowNumeric: z.boolean(),
@@ -20,6 +20,7 @@ type Output = ReturnType<typeof faker.airline.recordLocator>;
 
 export function RecordLocator() {
     const t = useDict().airline.recordLocator;
+    const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 

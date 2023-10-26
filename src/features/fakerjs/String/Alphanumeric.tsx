@@ -13,6 +13,7 @@ import {
     TextInput,
     Select,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generating a string consisting of alpha characters and digits.`;
 
@@ -27,6 +28,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.alphanumeric>;
 
 export function Alphanumeric() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

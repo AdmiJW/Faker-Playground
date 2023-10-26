@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random buzz phrase that can be used to demonstrate data being viewed by a manager.`;
 
 type Output = ReturnType<typeof faker.company.buzzPhrase>;
 
 export function BuzzPhrase() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random PIN number.`;
 
@@ -19,6 +20,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.pin>;
 
 export function PIN() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

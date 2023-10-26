@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random catch phrase descriptor that can be displayed to an end user.`;
 
 type Output = ReturnType<typeof faker.company.catchPhraseDescriptor>;
 
 export function CatchPhraseDescriptor() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

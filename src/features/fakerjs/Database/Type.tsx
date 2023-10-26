@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random database column type.`;
 
 type Output = ReturnType<typeof faker.database.type>;
 
 export function Type() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

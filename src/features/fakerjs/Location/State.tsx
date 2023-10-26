@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random localized state, or other equivalent first-level administrative entity for the locale's country such as a province or region.`;
 
@@ -19,6 +20,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.state>;
 
 export function State() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

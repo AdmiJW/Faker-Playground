@@ -13,6 +13,7 @@ import {
     TextInput,
     Checkbox,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a given length string of digits.`;
 
@@ -27,6 +28,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.numeric>;
 
 export function Numeric() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

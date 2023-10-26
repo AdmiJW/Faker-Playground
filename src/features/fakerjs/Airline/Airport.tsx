@@ -3,17 +3,19 @@
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import toast from 'react-hot-toast';
+
 import {
     FakerSection,
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
-import { useDict } from '@locale';
+import { useDict, useFaker } from '@locale';
 
 type Output = ReturnType<typeof faker.airline.airport>;
 
 export function Airport() {
     const t = useDict().airline.airport;
+    const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 

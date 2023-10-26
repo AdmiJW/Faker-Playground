@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random cron expression.`;
 
@@ -20,6 +21,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.system.cron>;
 
 export function Cron() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

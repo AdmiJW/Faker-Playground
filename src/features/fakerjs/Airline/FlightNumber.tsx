@@ -13,7 +13,7 @@ import {
     Checkbox,
     Slider,
 } from '@core/components/FakerSection';
-import { useDict } from '@locale';
+import { useDict, useFaker } from '@locale';
 
 const Schema = z.object({
     addLeadingZeroes: z.boolean(),
@@ -25,6 +25,7 @@ type Output = ReturnType<typeof faker.airline.flightNumber>;
 
 export function FlightNumber() {
     const t = useDict().airline.flightNumber;
+    const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 

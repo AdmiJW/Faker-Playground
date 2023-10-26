@@ -13,6 +13,7 @@ import {
     TextInput,
     Select,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a word of a specified length.`;
 
@@ -26,6 +27,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.lorem.word>;
 
 export function Word() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

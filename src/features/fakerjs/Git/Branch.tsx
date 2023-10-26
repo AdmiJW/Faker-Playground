@@ -3,17 +3,21 @@
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import toast from 'react-hot-toast';
+
 import {
     FakerSection,
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random branch name.`;
 
 type Output = ReturnType<typeof faker.git.branch>;
 
 export function Branch() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

@@ -13,6 +13,7 @@ import {
     Select,
     TextInput,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random ISBN identifier.`;
 
@@ -25,6 +26,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.commerce.isbn>;
 
 export function Isbn() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

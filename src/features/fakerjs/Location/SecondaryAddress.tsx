@@ -3,17 +3,21 @@
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import toast from 'react-hot-toast';
+
 import {
     FakerSection,
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random localized secondary address. This refers to a specific location at a given address such as an apartment or room number.`;
 
 type Output = ReturnType<typeof faker.location.secondaryAddress>;
 
 export function SecondaryAddress() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

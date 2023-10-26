@@ -14,6 +14,7 @@ import {
     DatePicker,
     zodDate,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random date that can be either in the past or in the future.`;
 
@@ -25,6 +26,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.anytime>;
 
 export function Anytime() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

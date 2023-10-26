@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `
     Returns an LCH color. Even though upper bound of chroma in LCH color space is theoretically unbounded, 
@@ -22,6 +23,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.lch>;
 
 export function Lch() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

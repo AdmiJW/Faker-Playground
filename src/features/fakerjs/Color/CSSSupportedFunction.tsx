@@ -9,12 +9,15 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Returns a random css supported color function name.`;
 
 type Output = ReturnType<typeof faker.color.cssSupportedFunction>;
 
 export function CSSSupportedFunction() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

@@ -9,6 +9,7 @@ import {
     FakerSection,
     Output,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `
     Returns a random color space name from the worldwide accepted color spaces. 
@@ -18,6 +19,8 @@ const tooltip = `
 type Output = ReturnType<typeof faker.color.space>;
 
 export function Space() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

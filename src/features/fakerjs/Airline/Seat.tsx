@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
-import { useDict } from '@locale';
+import { useDict, useFaker } from '@locale';
 
 const Schema = z.object({
     aircraftType: z.enum(['narrowbody', 'regional', 'widebody']),
@@ -19,6 +19,7 @@ type Output = ReturnType<typeof faker.airline.seat>;
 
 export function Seat() {
     const t = useDict().airline.seat;
+    const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 

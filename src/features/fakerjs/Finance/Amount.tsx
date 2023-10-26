@@ -13,6 +13,7 @@ import {
     TextInput,
     Checkbox,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random amount between the given bounds (inclusive).`;
 
@@ -28,6 +29,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.amount>;
 
 export function Amount() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

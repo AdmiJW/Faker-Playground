@@ -13,6 +13,7 @@ import {
     TextInput,
     Select,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generating a string consisting of letters in the English alphabet.`;
 
@@ -27,6 +28,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.alpha>;
 
 export function Alpha() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

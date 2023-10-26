@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates the given number of paragraphs.`;
 
@@ -21,6 +22,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.lorem.paragraph>;
 
 export function Paragraphs() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

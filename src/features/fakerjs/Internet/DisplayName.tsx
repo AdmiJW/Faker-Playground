@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `
     Generates a display name using the given person's name as base. The resulting display name may use one or both of the provided names. 
@@ -23,6 +24,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.displayName>;
 
 export function DisplayName() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

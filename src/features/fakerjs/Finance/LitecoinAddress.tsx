@@ -8,12 +8,15 @@ import {
     Output,
     NoParamsNeeded,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random Litecoin address.`;
 
 type Output = ReturnType<typeof faker.finance.litecoinAddress>;
 
 export function LitecoinAddress() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {

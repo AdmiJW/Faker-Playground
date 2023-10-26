@@ -16,6 +16,7 @@ import {
     Select,
     zodDate,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random commit entry as printed by git log.`;
 
@@ -29,6 +30,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.git.commitEntry>;
 
 export function CommitEntry() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

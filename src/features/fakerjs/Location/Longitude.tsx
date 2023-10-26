@@ -13,6 +13,7 @@ import {
     Slider,
     TextInput,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random longitude.`;
 
@@ -25,6 +26,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.longitude>;
 
 export function Longitude() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

@@ -13,6 +13,7 @@ import {
     TextInput,
     Select,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random image url provided via https://via.placeholder.com/.`;
 
@@ -29,6 +30,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.urlPlaceholder>;
 
 export function UrlPlaceholder() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

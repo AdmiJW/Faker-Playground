@@ -15,6 +15,7 @@ import {
     TextInput,
     zodDate,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random date in the near future.`;
 
@@ -27,6 +28,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.soon>;
 
 export function Soon() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({

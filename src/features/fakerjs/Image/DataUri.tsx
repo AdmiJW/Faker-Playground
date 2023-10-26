@@ -13,6 +13,7 @@ import {
     TextInput,
     Select,
 } from '@core/components/FakerSection';
+import { useDict, useFaker } from '@locale';
 
 const tooltip = `Generates a random data uri containing an URL-encoded SVG image or a Base64-encoded SVG image.`;
 
@@ -27,6 +28,8 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.dataUri>;
 
 export function DataUri() {
+    const faker = useFaker();
+
     const [output, setOutput] = useState<Output>();
 
     const formik = useFormik<State>({
