@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Department } from './Department';
 import { Isbn } from './Isbn';
@@ -9,10 +9,15 @@ import { ProductDescription } from './ProductDescription';
 import { ProductMaterial } from './ProductMaterial';
 import { ProductName } from './ProductName';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function CommercePage() {
+    const t = useDict().commerce;
+
     return (
         <>
-            <PageTitle title='Commerce 🛒' />
+            <PageTitle title={t.title} />
 
             <Department />
             <Isbn />

@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Bio } from './Bio';
 import { FirstName } from './FirstName';
@@ -16,10 +16,15 @@ import { SexType } from './SexType';
 import { Suffix } from './Suffix';
 import { ZodiacSign } from './ZodiacSign';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function PersonPage() {
+    const t = useDict().person;
+
     return (
         <>
-            <PageTitle title='Person 👨🏻' />
+            <PageTitle title={t.title} />
 
             <Bio />
             <FirstName />

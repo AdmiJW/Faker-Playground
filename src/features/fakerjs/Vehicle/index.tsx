@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Bicycle } from './Bicycle';
 import { Color } from './Color';
@@ -10,10 +10,15 @@ import { Vehicle } from './Vehicle';
 import { VIN } from './VIN';
 import { VRM } from './VRM';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function VehiclePage() {
+    const t = useDict().vehicle;
+
     return (
         <>
-            <PageTitle title='Vehicle 🚗' />
+            <PageTitle title={t.title} />
 
             <Bicycle />
             <Color />

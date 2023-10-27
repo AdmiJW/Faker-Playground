@@ -1,4 +1,5 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
+
 import { Bear } from './Bear';
 import { Bird } from './Bird';
 import { Cat } from './Cat';
@@ -15,10 +16,15 @@ import { Rodent } from './Rodent';
 import { Snake } from './Snake';
 import { Type } from './Type';
 
+import { PageTitle } from '@/core/components/FakerSection';
+import { useDict } from '@locale';
+
 export function AnimalPage() {
+    const t = useDict().animal;
+
     return (
         <>
-            <PageTitle title='Animal 🐶' />
+            <PageTitle title={t.title} />
 
             <Bear />
             <Bird />

@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Lines } from './Lines';
 import { Paragraph } from './Paragraph';
@@ -10,10 +10,15 @@ import { Text } from './Text';
 import { Word } from './Word';
 import { Words } from './Words';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function LoremPage() {
+    const t = useDict().lorem;
+
     return (
         <>
-            <PageTitle title='Lorem 📝' />
+            <PageTitle title={t.title} />
 
             <Lines />
             <Paragraph />

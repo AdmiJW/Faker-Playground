@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Cymk } from './Cymk';
 import { ColorByCSSColorSpace } from './ColorByCSSColorSpace';
@@ -12,10 +12,15 @@ import { Lch } from './Lch';
 import { Rgb } from './Rgb';
 import { Space } from './Space';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function ColorPage() {
+    const t = useDict().color;
+
     return (
         <>
-            <PageTitle title='Color 🎨' />
+            <PageTitle title={t.title} />
 
             <Cymk />
             <ColorByCSSColorSpace />

@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { CommonFileExt } from './CommonFileExt';
 import { CommonFileName } from './CommonFileName';
@@ -13,10 +13,15 @@ import { MimeType } from './MimeType';
 import { NetworkInterface } from './NetworkInterface';
 import { SemVer } from './SemVer';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function SystemPage() {
+    const t = useDict().system;
+
     return (
         <>
-            <PageTitle title='System 🖥️' />
+            <PageTitle title={t.title} />
 
             <CommonFileExt />
             <CommonFileName />

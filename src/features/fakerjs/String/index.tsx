@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Alpha } from './Alpha';
 import { Alphanumeric } from './Alphanumeric';
@@ -12,10 +12,15 @@ import { Sample } from './Sample';
 import { Symbol } from './Symbol';
 import { UUID } from './UUID';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function StringPage() {
+    const t = useDict().string;
+
     return (
         <>
-            <PageTitle title='String 🧵' />
+            <PageTitle title={t.title} />
 
             <Alpha />
             <Alphanumeric />

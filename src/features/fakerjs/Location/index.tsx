@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { BuildingNumber } from './BuildingNumber';
 import { CardinalDirection } from './CardinalDirection';
@@ -18,10 +18,15 @@ import { StreetAddress } from './StreetAddress';
 import { TimeZone } from './TimeZone';
 import { ZipCode } from './ZipCode';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function LocationPage() {
+    const t = useDict().location;
+
     return (
         <>
-            <PageTitle title='Location 🌎' />
+            <PageTitle title={t.title} />
 
             <BuildingNumber />
             <CardinalDirection />

@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Avatar } from './Avatar';
 import { Color } from './Color';
@@ -22,10 +22,15 @@ import { Url } from './Url';
 import { UserAgent } from './UserAgent';
 import { UserName } from './UserName';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function InternetPage() {
+    const t = useDict().internet;
+
     return (
         <>
-            <PageTitle title='Internet 🌐' />
+            <PageTitle title={t.title} />
 
             <Avatar />
             <Color />

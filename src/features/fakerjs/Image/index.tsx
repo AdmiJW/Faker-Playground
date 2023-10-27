@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Avatar } from './Avatar';
 import { AvatarGitHub } from './AvatarGitHub';
@@ -9,10 +9,15 @@ import { UrlLoremFlickr } from './UrlLoremFlickr';
 import { UrlPicsumPhotos } from './UrlPicsumPhotos';
 import { UrlPlaceholder } from './UrlPlaceholder';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function ImagePage() {
+    const t = useDict().image;
+
     return (
         <>
-            <PageTitle title='Image 📷' />
+            <PageTitle title={t.title} />
 
             <Avatar />
             <AvatarGitHub />

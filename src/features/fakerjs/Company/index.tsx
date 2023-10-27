@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { BuzzAdjective } from './BuzzAdjective';
 import { BuzzNoun } from './BuzzNoun';
@@ -10,10 +10,15 @@ import { CatchPhraseDescriptor } from './CatchPhraseDescriptor';
 import { CatchPhraseNoun } from './CatchPhraseNoun';
 import { Name } from './Name';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function CompanyPage() {
+    const t = useDict().company;
+
     return (
         <>
-            <PageTitle title='Company 🏢' />
+            <PageTitle title={t.title} />
 
             <BuzzAdjective />
             <BuzzNoun />

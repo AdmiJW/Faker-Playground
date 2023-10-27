@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Abbreviation } from './Abbreviation';
 import { Adjective } from './Adjective';
@@ -7,10 +7,15 @@ import { Noun } from './Noun';
 import { Phrase } from './Phrase';
 import { Verb } from './Verb';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function HackerPage() {
+    const t = useDict().hacker;
+
     return (
         <>
-            <PageTitle title='Hacker 👨🏻‍💻' />
+            <PageTitle title={t.title} />
 
             <Abbreviation />
             <Adjective />

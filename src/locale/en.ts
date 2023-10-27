@@ -104,4 +104,73 @@ export const enDict = {
             optionRegional: 'Regional',
         },
     },
+    animal: {
+        title: 'Animal 🐶',
+    },
+    color: {
+        title: 'Color 🎨',
+    },
+    commerce: {
+        title: 'Commerce 🛒',
+    },
+    company: {
+        title: 'Company 🏢',
+    },
+    database: {
+        title: 'Database 🗄️',
+    },
+    datatype: {
+        title: 'Datatype 📊',
+    },
+    date: {
+        title: 'Date 📅',
+    },
+    finance: {
+        title: 'Finance 💰',
+    },
+    git: {
+        title: 'Git 🌿',
+    },
+    hacker: {
+        title: 'Hacker 🎭',
+    },
+    image: {
+        title: 'Image 📷',
+    },
+    internet: {
+        title: 'Internet 🌐',
+    },
+    location: {
+        title: 'Location 📍',
+    },
+    lorem: {
+        title: 'Lorem 📝',
+    },
+    music: {
+        title: 'Music 🎵',
+    },
+    number: {
+        title: 'Number 🔢',
+    },
+    person: {
+        title: 'Person 👨🏻',
+    },
+    phone: {
+        title: 'Phone 📞',
+    },
+    science: {
+        title: 'Science 🔬',
+    },
+    string: {
+        title: 'String 🔡',
+    },
+    system: {
+        title: 'System 🖥️',
+    },
+    vehicle: {
+        title: 'Vehicle 🚗',
+    },
+    word: {
+        title: 'Word 📖',
+    },
 };

@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { Anytime } from './Anytime';
 import { Between } from './Between';
@@ -11,10 +11,15 @@ import { Recent } from './Recent';
 import { Soon } from './Soon';
 import { Weekday } from './Weekday';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function DatePage() {
+    const t = useDict().date;
+
     return (
         <>
-            <PageTitle title='Date 📅' />
+            <PageTitle title={t.title} />
 
             <Anytime />
             <Between />

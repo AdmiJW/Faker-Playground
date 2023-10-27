@@ -1,4 +1,4 @@
-import { PageTitle } from '@/core/components/FakerSection';
+'use client';
 
 import { AccountName } from './AccountName';
 import { AccountNumber } from './AccountNumber';
@@ -21,10 +21,15 @@ import { RoutingNumber } from './RoutingNumber';
 import { TransactionDescription } from './TransactionDescription';
 import { TransactionType } from './TransactionType';
 
+import { useDict } from '@locale';
+import { PageTitle } from '@/core/components/FakerSection';
+
 export function FinancePage() {
+    const t = useDict().finance;
+
     return (
         <>
-            <PageTitle title='Finance 💰' />
+            <PageTitle title={t.title} />
 
             <AccountName />
             <AccountNumber />

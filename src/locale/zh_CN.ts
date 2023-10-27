@@ -99,4 +99,73 @@ export const zhCnDict = {
             optionRegional: '区域机',
         },
     },
+    animal: {
+        title: '动物 🐶',
+    },
+    color: {
+        title: '颜色 🎨',
+    },
+    commerce: {
+        title: '商业 🛒',
+    },
+    company: {
+        title: '公司 🏢',
+    },
+    database: {
+        title: '数据库 🗄️',
+    },
+    datatype: {
+        title: '数据类型 📊',
+    },
+    date: {
+        title: '日期 📅',
+    },
+    finance: {
+        title: '金融 💰',
+    },
+    git: {
+        title: 'Git 🌿',
+    },
+    hacker: {
+        title: '黑客 🎭',
+    },
+    image: {
+        title: '图像 📷',
+    },
+    internet: {
+        title: '互联网 🌐',
+    },
+    location: {
+        title: '地点 📍',
+    },
+    lorem: {
+        title: '随机文本 📝',
+    },
+    music: {
+        title: '音乐 🎵',
+    },
+    number: {
+        title: '数字 🔢',
+    },
+    person: {
+        title: '个人信息 👨🏻',
+    },
+    phone: {
+        title: '电话号码 📞',
+    },
+    science: {
+        title: '科学 🔬',
+    },
+    string: {
+        title: '字符串 🔡',
+    },
+    system: {
+        title: '系统 🖥️',
+    },
+    vehicle: {
+        title: '交通工具 🚗',
+    },
+    word: {
+        title: '词汇 📖',
+    },
 };
