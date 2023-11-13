@@ -14,7 +14,6 @@ import {
     Select,
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
-import { getAlertTitleUtilityClass } from '@mui/material';
 
 const Schema = z.object({
     min: z.number().int().nonnegative(),

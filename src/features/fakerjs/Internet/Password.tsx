@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random password.`;
-
 const Schema = z.object({
     length: z.number().int().min(0),
     memorable: z.boolean(),

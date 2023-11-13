@@ -1268,6 +1268,7 @@ export const zhCnDict = {
             maxLabel: '最大',
             maxTooltip: '生成的单词数的最大值。',
             errorMaxMustBeGreaterThanMin: '最大值必须大于',
+            errorMinMustBeLessThanMax: '最小值必须小于最大值。',
         },
     },
     music: {
