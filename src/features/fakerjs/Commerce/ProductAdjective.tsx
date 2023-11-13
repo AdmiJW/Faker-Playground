@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns an adjective describing a product.`;
-
 type Output = ReturnType<typeof faker.commerce.productAdjective>;
 
 export function ProductAdjective() {
+    const t = useDict().commerce.productAdjective;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.commerce.productAdjective());
-        toast.success('Faked product adjective!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='Product Adjective'
+            title={t.title}
             id='product-adjective'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

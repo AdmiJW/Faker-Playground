@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a UUID v4 (Universally Unique Identifier).`;
-
 type Output = ReturnType<typeof faker.string.uuid>;
 
 export function UUID() {
+    const t = useDict().string.uuid;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.string.uuid());
-        toast.success('Faked UUID!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='UUID' id='uuid' tooltip={tooltip}>
+        <FakerSection title={t.title} id='uuid' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

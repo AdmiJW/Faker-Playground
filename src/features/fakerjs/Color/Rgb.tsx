@@ -16,8 +16,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns an RGB color.`;
-
 const Schema = z.object({
     casing: z.enum(['lower', 'upper', 'mixed']),
     format: z.enum(['binary', 'css', 'decimal', 'hex']),
@@ -29,6 +27,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.rgb>;
 
 export function Rgb() {
+    const t = useDict().color.rgb;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -49,52 +48,52 @@ export function Rgb() {
                 prefix: values.prefix,
             });
             setOutput(rgb);
-            toast.success('Faked rgb!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='RGB' id='rgb' tooltip={tooltip}>
+        <FakerSection title={t.title} id='rgb' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Casing'
+                    label={t.casingLabel}
                     value={formik.values.casing}
                     onChange={formik.handleChange}
                     name='casing'
                     options={[
-                        { value: 'lower', label: 'Lower' },
-                        { value: 'upper', label: 'Upper' },
-                        { value: 'mixed', label: 'Mixed' },
+                        { value: 'lower', label: t.optionLower },
+                        { value: 'upper', label: t.optionUpper },
+                        { value: 'mixed', label: t.optionMixed },
                     ]}
-                    tooltip="Letter type case of the generated hex color. Only applied when 'hex' format is used."
+                    tooltip={t.casingTooltip}
                 />
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     value={formik.values.format}
                     onChange={formik.handleChange}
                     name='format'
                     options={[
-                        { value: 'binary', label: 'Binary' },
-                        { value: 'css', label: 'CSS' },
-                        { value: 'decimal', label: 'Decimal' },
-                        { value: 'hex', label: 'Hex' },
+                        { value: 'binary', label: t.optionBinary },
+                        { value: 'css', label: t.optionCss },
+                        { value: 'decimal', label: t.optionDecimal },
+                        { value: 'hex', label: t.optionHex },
                     ]}
-                    tooltip='Format of generated RGB color.'
+                    tooltip={t.formatTooltip}
                 />
                 <Checkbox
-                    label='Include Alpha'
+                    label={t.includeAlphaLabel}
                     checked={formik.values.includeAlpha}
                     onChange={(newValue) =>
                         formik.setFieldValue('includeAlpha', newValue)
                     }
-                    tooltip='Adds an alpha value to the color (RGBA).'
+                    tooltip={t.includeAlphaTooltip}
                 />
                 <TextInput
-                    label='Prefix'
+                    label={t.prefixLabel}
                     name='prefix'
                     value={formik.values.prefix || ''}
                     onChange={formik.handleChange}
-                    tooltip="Prefix of the generated hex color. Only applied when 'hex' format is used."
+                    tooltip={t.prefixTooltip}
                     error={formik.errors.prefix}
                 />
             </div>

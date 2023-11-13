@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a file path.`;
-
 type Output = ReturnType<typeof faker.system.filePath>;
 
 export function FilePath() {
+    const t = useDict().system.filePath;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.system.filePath());
-        toast.success('Faked file path!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='File Path' id='file-path' tooltip={tooltip}>
+        <FakerSection title={t.title} id='file-path' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

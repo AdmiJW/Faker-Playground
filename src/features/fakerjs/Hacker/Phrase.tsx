@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random hacker/IT phrase.`;
-
 type Output = ReturnType<typeof faker.hacker.phrase>;
 
 export function Phrase() {
+    const t = useDict().hacker.phrase;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.hacker.phrase());
-        toast.success('Faked phrase!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Phrase' id='phrase' tooltip={tooltip}>
+        <FakerSection title={t.title} id='phrase' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

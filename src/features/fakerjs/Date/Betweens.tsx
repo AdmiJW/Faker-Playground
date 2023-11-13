@@ -17,8 +17,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates random dates between the given boundaries.`;
-
 const Schema = z.object({
     min: z.number(),
     max: z.number(),
@@ -30,6 +28,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.betweens>;
 
 export function Betweens() {
+    const t = useDict().date.betweens;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -50,16 +49,10 @@ export function Betweens() {
             const isError = isMinMoreThanMax || isFromAfterTo;
             if (isError) {
                 const errors = {
-                    min: isMinMoreThanMax
-                        ? 'Min must be less than or equal to Max'
-                        : '',
-                    max: isMinMoreThanMax
-                        ? 'Max must be greater than or equal to Min'
-                        : '',
-                    from: isFromAfterTo
-                        ? 'From date must be before to date'
-                        : '',
-                    to: isFromAfterTo ? 'To date must be after from date' : '',
+                    min: isMinMoreThanMax ? t.errorMinMustBeLessThanMax : '',
+                    max: isMinMoreThanMax ? t.errorMaxMustBeGreaterThanMin : '',
+                    from: isFromAfterTo ? t.errorFromMustBeBeforeTo : '',
+                    to: isFromAfterTo ? t.errorToMustBeAfterFrom : '',
                 };
                 setErrors(errors);
                 return;
@@ -71,48 +64,48 @@ export function Betweens() {
                 to: to.toDate(),
             });
             setOutput(betweens);
-            toast.success('Faked betweens!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Betweens' id='betweens' tooltip={tooltip}>
+        <FakerSection title={t.title} id='betweens' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The minimum number of dates to generate.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The maximum number of dates to generate.'
+                    tooltip={t.maxTooltip}
                 />
                 <DatePicker
-                    label='From'
+                    label={t.fromLabel}
                     name='from'
                     value={formik.values.from}
                     onChange={(newDate) =>
                         formik.setFieldValue('from', newDate)
                     }
                     error={formik.errors.from as string}
-                    tooltip='The early date boundary.'
+                    tooltip={t.fromTooltip}
                 />
                 <DatePicker
-                    label='To'
+                    label={t.toLabel}
                     name='to'
                     value={formik.values.to}
                     onChange={(newDate) => formik.setFieldValue('to', newDate)}
                     error={formik.errors.to as string}
-                    tooltip='The late date boundary.'
+                    tooltip={t.toTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

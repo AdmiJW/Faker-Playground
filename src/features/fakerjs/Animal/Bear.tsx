@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random bear species.`;
-
 type Output = ReturnType<typeof faker.animal.bear>;
 
 export function Bear() {
+    const t = useDict().animal.bear;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.animal.bear());
-        toast.success('Faked bear!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Bear' id='bear' tooltip={tooltip}>
+        <FakerSection title={t.title} id='bear' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

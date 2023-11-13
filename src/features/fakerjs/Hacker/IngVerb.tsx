@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random hacker/IT verb for continuous actions (en: ing suffix; e.g. hacking).`;
-
 type Output = ReturnType<typeof faker.hacker.ingverb>;
 
 export function IngVerb() {
+    const t = useDict().hacker.ingVerb;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.hacker.ingverb());
-        toast.success('Faked ing verb!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Ing verb' id='ing-verb' tooltip={tooltip}>
+        <FakerSection title={t.title} id='ing-verb' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

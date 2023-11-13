@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random image url provided via https://via.placeholder.com/.`;
-
 const Schema = z.object({
     backgroundColor: z.string().optional(),
     format: z.enum(['gif', 'jpeg', 'jpg', 'png', 'webp']),
@@ -30,6 +28,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.urlPlaceholder>;
 
 export function UrlPlaceholder() {
+    const t = useDict().image.urlPlaceholder;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -54,72 +53,68 @@ export function UrlPlaceholder() {
                 width: values.width,
             });
             setOutput(url);
-            toast.success('Faked url placeholder!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='URL Placeholder'
-            id='url-placeholder'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='url-placeholder' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Background Color'
+                    label={t.backgroundColorLabel}
                     name='backgroundColor'
                     value={formik.values.backgroundColor ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.backgroundColor}
-                    tooltip='The background color of the image.'
+                    tooltip={t.backgroundColorTooltip}
                 />
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     name='format'
                     value={formik.values.format}
                     onChange={formik.handleChange}
-                    tooltip='The format of the image.'
+                    tooltip={t.formatTooltip}
                     options={[
-                        { label: 'GIF', value: 'gif' },
-                        { label: 'JPEG', value: 'jpeg' },
-                        { label: 'JPG', value: 'jpg' },
-                        { label: 'PNG', value: 'png' },
-                        { label: 'WEBP', value: 'webp' },
+                        { label: t.optionGif, value: 'gif' },
+                        { label: t.optionJpeg, value: 'jpeg' },
+                        { label: t.optionJpg, value: 'jpg' },
+                        { label: t.optionPng, value: 'png' },
+                        { label: t.optionWebp, value: 'webp' },
                     ]}
                 />
                 <TextInput
-                    label='Text'
+                    label={t.textLabel}
                     name='text'
                     value={formik.values.text ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.text}
-                    tooltip='The text to display on the image.'
+                    tooltip={t.textTooltip}
                 />
                 <TextInput
-                    label='Text Color'
+                    label={t.textColorLabel}
                     name='textColor'
                     value={formik.values.textColor ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.textColor}
-                    tooltip='The text color of the image.'
+                    tooltip={t.textColorTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Height'
+                    label={t.heightLabel}
                     name='height'
                     value={formik.values.height.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.height}
-                    tooltip='The height of the image.'
+                    tooltip={t.heightTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Width'
+                    label={t.widthLabel}
                     name='width'
                     value={formik.values.width.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.width}
-                    tooltip='The width of the image.'
+                    tooltip={t.widthTooltip}
                 />
             </div>
             <Output

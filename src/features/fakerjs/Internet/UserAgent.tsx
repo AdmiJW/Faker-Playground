@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random user agent string.`;
-
 type Output = ReturnType<typeof faker.internet.userAgent>;
 
 export function UserAgent() {
+    const t = useDict().internet.userAgent;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.userAgent());
-        toast.success('Faked user agent!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='User Agent' id='user-agent' tooltip={tooltip}>
+        <FakerSection title={t.title} id='user-agent' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

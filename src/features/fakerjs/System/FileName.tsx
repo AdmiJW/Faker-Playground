@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random file name with extension.`;
-
 const Schema = z.object({
     min: z.number().int().nonnegative(),
     max: z.number().int().nonnegative(),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.system.fileName>;
 
 export function FileName() {
+    const t = useDict().system.fileName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -35,8 +34,8 @@ export function FileName() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -48,30 +47,30 @@ export function FileName() {
                 },
             });
             setOutput(fileName);
-            toast.success('Faked file name!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='File Name' id='file-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='file-name' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min Extensions'
+                    label={t.minExtensionsLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='Define how many extensions the file name should have.'
+                    tooltip={t.minExtensionsTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max Extensions'
+                    label={t.maxExtensionsLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='Define how many extensions the file name should have.'
+                    tooltip={t.maxExtensionsTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

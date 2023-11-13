@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random domain name.`;
-
 type Output = ReturnType<typeof faker.internet.domainName>;
 
 export function DomainName() {
+    const t = useDict().internet.domainName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.domainName());
-        toast.success('Faked domain name!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Domain Name' id='domain-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='domain-name' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

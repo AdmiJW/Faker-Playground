@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random song name.`;
-
 type Output = ReturnType<typeof faker.music.songName>;
 
 export function SongName() {
+    const t = useDict().music.songName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.music.songName());
-        toast.success('Faked song name!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Song Name' id='song-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='song-name' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

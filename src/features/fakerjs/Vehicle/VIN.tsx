@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a vehicle identification number (VIN).`;
-
 type Output = ReturnType<typeof faker.vehicle.vin>;
 
 export function VIN() {
+    const t = useDict().vehicle.vin;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.vehicle.vin());
-        toast.success('Faked VIN!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='VIN' id='vin' tooltip={tooltip}>
+        <FakerSection title={t.title} id='vin' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

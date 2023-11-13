@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns an HSL color.`;
-
 const Schema = z.object({
     format: z.enum(['binary', 'css', 'decimal']),
     includeAlpha: z.boolean(),
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.hsl>;
 
 export function Hsl() {
+    const t = useDict().color.hsl;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,32 +41,32 @@ export function Hsl() {
                 includeAlpha: values.includeAlpha,
             });
             setOutput(hsl);
-            toast.success('Faked hsl!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='HSL' id='hsl' tooltip={tooltip}>
+        <FakerSection title={t.title} id='hsl' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     value={formik.values.format}
                     onChange={formik.handleChange}
                     name='format'
                     options={[
-                        { value: 'binary', label: 'Binary' },
-                        { value: 'css', label: 'CSS' },
-                        { value: 'decimal', label: 'Decimal' },
+                        { value: 'binary', label: t.optionBinary },
+                        { value: 'css', label: t.optionCss },
+                        { value: 'decimal', label: t.optionDecimal },
                     ]}
-                    tooltip='Format of generated HSL color.'
+                    tooltip={t.tooltip}
                 />
                 <Checkbox
                     checked={formik.values.includeAlpha}
-                    label='Include Alpha'
+                    label={t.includeAlphaLabel}
                     onChange={(newValue) =>
                         formik.setFieldValue('includeAlpha', newValue)
                     }
-                    tooltip='Adds an alpha value to the color (RGBA).'
+                    tooltip={t.includeAlphaTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

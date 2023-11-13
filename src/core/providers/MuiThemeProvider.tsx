@@ -27,7 +27,7 @@ function deriveTheme(isDarkMode: boolean) {
             background: {
                 paper: isDarkMode
                     ? 'rgba(51,51,51,.8)'
-                    : 'rgba(255,255,255,.5)',
+                    : 'rgba(255,255,255, .95)',
             },
         },
         typography: {

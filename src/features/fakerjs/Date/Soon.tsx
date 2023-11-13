@@ -17,8 +17,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random date in the near future.`;
-
 const Schema = z.object({
     refDate: zodDate,
     days: z.number().nonnegative(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.soon>;
 
 export function Soon() {
+    const t = useDict().date.soon;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -44,31 +43,31 @@ export function Soon() {
                 refDate: values.refDate.toDate(),
             });
             setOutput(soon);
-            toast.success('Faked soon!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Soon' id='soon' tooltip={tooltip}>
+        <FakerSection title={t.title} id='soon' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Days'
+                    label={t.daysLabel}
                     name='days'
                     value={formik.values.days.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.days}
-                    tooltip='The range of days the date may be in the past.'
+                    tooltip={t.daysTooltip}
                 />
                 <DatePicker
-                    label='Reference Date'
+                    label={t.refDateLabel}
                     name='refDate'
                     value={formik.values.refDate}
                     onChange={(date) => {
                         formik.setFieldValue('refDate', date);
                     }}
                     error={formik.errors.refDate as string}
-                    tooltip='The date to use as reference point for the newly generated date.'
+                    tooltip={t.refDateTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

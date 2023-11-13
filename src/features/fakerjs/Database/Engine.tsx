@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random database engine.`;
-
 type Output = ReturnType<typeof faker.database.engine>;
 
 export function Engine() {
+    const t = useDict().database.engine;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.database.engine());
-        toast.success('Faked engine!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Engine' id='engine' tooltip={tooltip}>
+        <FakerSection title={t.title} id='engine' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

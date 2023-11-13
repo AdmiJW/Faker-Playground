@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random mac address.`;
-
 const Schema = z.object({
     separator: z.enum([':', '-', 'none']),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.mac>;
 
 export function MAC() {
+    const t = useDict().internet.mac;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,23 +33,23 @@ export function MAC() {
                 separator: values.separator === 'none' ? '' : values.separator,
             });
             setOutput(mac);
-            toast.success('Faked mac!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='MAC' id='mac' tooltip={tooltip}>
+        <FakerSection title={t.title} id='mac' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Separator'
+                    label={t.separatorLabel}
                     name='separator'
-                    tooltip="The optional separator to use. Can be either ':', '-' or ''."
+                    tooltip={t.separatorTooltip}
                     onChange={formik.handleChange}
                     value={formik.values.separator}
                     options={[
-                        { label: ':', value: ':' },
-                        { label: '-', value: '-' },
-                        { label: 'None', value: 'none' },
+                        { label: t.optionColon, value: ':' },
+                        { label: t.optionDash, value: '-' },
+                        { label: t.optionNone, value: 'none' },
                     ]}
                 />
             </div>

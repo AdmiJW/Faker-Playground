@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random css supported color function name.`;
-
 type Output = ReturnType<typeof faker.color.cssSupportedFunction>;
 
 export function CSSSupportedFunction() {
+    const t = useDict().color.cssSupportedFunction;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.color.cssSupportedFunction());
-        toast.success('Faked css supported function!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='CSS Supported Function'
+            title={t.title}
             id='css-supported-function'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

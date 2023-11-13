@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns an HWB color.`;
-
 const Schema = z.object({
     format: z.enum(['binary', 'css', 'decimal']),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.hwb>;
 
 export function Hwb() {
+    const t = useDict().color.hwb;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,24 +33,24 @@ export function Hwb() {
                 format: values.format,
             });
             setOutput(hwb);
-            toast.success('Faked hwb!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='HWB' id='hwb' tooltip={tooltip}>
+        <FakerSection title={t.title} id='hwb' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     value={formik.values.format}
                     onChange={formik.handleChange}
                     name='format'
                     options={[
-                        { value: 'binary', label: 'Binary' },
-                        { value: 'css', label: 'CSS' },
-                        { value: 'decimal', label: 'Decimal' },
+                        { value: 'binary', label: t.optionBinary },
+                        { value: 'css', label: t.optionCss },
+                        { value: 'decimal', label: t.optionDecimal },
                     ]}
-                    tooltip='Format of generated HWB color.'
+                    tooltip={t.formatTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

@@ -10,22 +10,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random avatar image url.`;
-
 type Output = ReturnType<typeof faker.image.avatar>;
 
 export function Avatar() {
+    const t = useDict().image.avatar;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.image.avatar());
-        toast.success('Faked avatar!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Avatar' id='avatar' tooltip={tooltip}>
+        <FakerSection title={t.title} id='avatar' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} imageUrl={output} />
         </FakerSection>

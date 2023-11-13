@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a hexadecimal string.`;
-
 const Schema = z.object({
     casing: z.enum(['lower', 'upper', 'mixed']),
     min: z.number().int().nonnegative(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.hexadecimal>;
 
 export function Hexadecimal() {
+    const t = useDict().string.hexadecimal;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -44,8 +43,8 @@ export function Hexadecimal() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -59,49 +58,49 @@ export function Hexadecimal() {
                 },
             });
             setOutput(hexadecimal);
-            toast.success('Faked hexadecimal!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Hexadecimal' id='hexadecimal' tooltip={tooltip}>
+        <FakerSection title={t.title} id='hexadecimal' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Casing'
+                    label={t.casingLabel}
                     name='casing'
                     onChange={formik.handleChange}
-                    tooltip='Casing of the generated number.'
+                    tooltip={t.casingTooltip}
                     value={formik.values.casing}
                     options={[
-                        { label: 'Lower', value: 'lower' },
-                        { label: 'Upper', value: 'upper' },
-                        { label: 'Mixed', value: 'mixed' },
+                        { label: t.optionLower, value: 'lower' },
+                        { label: t.optionUpper, value: 'upper' },
+                        { label: t.optionMixed, value: 'mixed' },
                     ]}
                 />
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The number or range of characters to generate after the prefix.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The number or range of characters to generate after the prefix.'
+                    tooltip={t.maxTooltip}
                 />
                 <TextInput
-                    label='Prefix'
+                    label={t.prefixLabel}
                     name='prefix'
                     onChange={formik.handleChange}
                     error={formik.errors.prefix}
-                    tooltip='Prefix for the generated number.'
+                    tooltip={t.prefixTooltip}
                     value={formik.values.prefix || ''}
                 />
             </div>

@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random routing number.`;
-
 type Output = ReturnType<typeof faker.finance.routingNumber>;
 
 export function RoutingNumber() {
+    const t = useDict().finance.routingNumber;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.routingNumber());
-        toast.success('Faked routing number!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Routing Number'
-            id='routing-number'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='routing-number' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random time zone.`;
-
 type Output = ReturnType<typeof faker.location.timeZone>;
 
 export function TimeZone() {
+    const t = useDict().location.timeZone;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.location.timeZone());
-        toast.success('Faked time zone!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Time Zone' id='time-zone' tooltip={tooltip}>
+        <FakerSection title={t.title} id='time-zone' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

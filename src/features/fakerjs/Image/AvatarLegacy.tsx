@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random avatar from https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar.`;
-
 type Output = ReturnType<typeof faker.image.avatarLegacy>;
 
 export function AvatarLegacy() {
+    const t = useDict().image.avatarLegacy;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.image.avatarLegacy());
-        toast.success('Faked avatar legacy!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Avatar Legacy'
-            id='avatar-legacy'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='avatar-legacy' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} imageUrl={output} />
         </FakerSection>

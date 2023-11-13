@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a username using the given person's name as base. The resulting username may use neither, one or both of the names provided. This will always return a plain ASCII string. Some basic stripping of accents and transliteration of characters will be done.`;
-
 const Schema = z.object({
     firstName: z.string().optional(),
     lastName: z.string().optional(),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.email>;
 
 export function UserName() {
+    const t = useDict().internet.userName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,7 +36,7 @@ export function UserName() {
                 lastName: values.lastName,
             });
             setOutput(userName);
-            toast.success('Faked username!');
+            toast.success(t.success);
         },
     });
 
@@ -48,24 +47,24 @@ export function UserName() {
         formik.setFieldValue('lastName', faker.person.lastName());
 
     return (
-        <FakerSection title='Username' id='username' tooltip={tooltip}>
+        <FakerSection title={t.title} id='username' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='First Name'
+                    label={t.firstNameLabel}
                     name='firstName'
                     value={formik.values.firstName ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.firstName}
-                    tooltip='The optional first name to use.'
+                    tooltip={t.firstNameTooltip}
                     randomFn={randomizeFirstName}
                 />
                 <TextInput
-                    label='Last Name'
+                    label={t.lastNameLabel}
                     name='lastName'
                     value={formik.values.lastName ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.lastName}
-                    tooltip='The optional last name to use.'
+                    tooltip={t.lastNameTooltip}
                     randomFn={randomizeLastName}
                 />
             </div>

@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random http(s) url.`;
-
 const Schema = z.object({
     appendSlash: z.boolean(),
     protocol: z.enum(['http', 'https']),
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.url>;
 
 export function Url() {
+    const t = useDict().internet.url;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,30 +41,30 @@ export function Url() {
                 protocol: values.protocol,
             });
             setOutput(url);
-            toast.success('Faked url!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Url' id='url' tooltip={tooltip}>
+        <FakerSection title={t.title} id='url' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Append Slash'
+                    label={t.appendSlashLabel}
                     checked={formik.values.appendSlash}
-                    tooltip='Whether to append a slash to the end of the url (path).'
+                    tooltip={t.appendSlashTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue('appendSlash', newValue)
                     }
                 />
                 <Select
                     name='protocol'
-                    label='Protocol'
+                    label={t.protocolLabel}
                     onChange={formik.handleChange}
                     value={formik.values.protocol}
-                    tooltip='The protocol to use.'
+                    tooltip={t.protocolTooltip}
                     options={[
-                        { label: 'http', value: 'http' },
-                        { label: 'https', value: 'https' },
+                        { label: t.optionHttp, value: 'http' },
+                        { label: t.optionHttps, value: 'https' },
                     ]}
                 />
             </div>

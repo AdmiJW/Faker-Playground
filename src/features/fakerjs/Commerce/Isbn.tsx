@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random ISBN identifier.`;
-
 const Schema = z.object({
     separator: z.string().optional(),
     variant: z.enum(['10', '13']),
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.commerce.isbn>;
 
 export function Isbn() {
+    const t = useDict().commerce.isbn;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -43,26 +42,26 @@ export function Isbn() {
                 variant,
             });
             setOutput(isbn);
-            toast.success('Faked isbn!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='ISBN' id='isbn' tooltip={tooltip}>
+        <FakerSection title={t.title} id='isbn' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Separator'
+                    label={t.separatorLabel}
                     name='separator'
                     onChange={formik.handleChange}
-                    tooltip='The separator to use in the format.'
+                    tooltip={t.separatorTooltip}
                     value={formik.values.separator || ''}
                     error={formik.errors.separator}
                 />
                 <Select
-                    label='Variant'
+                    label={t.variantLabel}
                     name='variant'
                     onChange={formik.handleChange}
-                    tooltip='The variant of the identifier to return. Can be either 10 (10-digit format) or 13 (13-digit format).'
+                    tooltip={t.variantTooltip}
                     options={[
                         { label: '10', value: '10' },
                         { label: '13', value: '13' },

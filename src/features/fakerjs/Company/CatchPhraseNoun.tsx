@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random catch phrase noun that can be displayed to an end user.`;
-
 type Output = ReturnType<typeof faker.company.catchPhraseNoun>;
 
 export function CatchPhraseNoun() {
+    const t = useDict().company.catchPhraseNoun;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.company.catchPhraseNoun());
-        toast.success('Faked catch phrase noun!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='Catch Phrase Noun'
+            title={t.title}
             id='catch-phrase-noun'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

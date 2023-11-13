@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random credit card number.`;
-
 const Schema = z.object({
     issuer: z.string().optional(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.creditCardNumber>;
 
 export function CreditCardNumber() {
+    const t = useDict().finance.creditCardNumber;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,24 +33,24 @@ export function CreditCardNumber() {
                 issuer: values.issuer,
             });
             setOutput(creditCardNumber);
-            toast.success('Faked credit card number!');
+            toast.success(t.success);
         },
     });
 
     return (
         <FakerSection
-            title='Credit Card Number'
+            title={t.title}
             id='credit-card-number'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Issuer'
+                    label={t.issuerLabel}
                     name='issuer'
                     value={formik.values.issuer || ''}
                     onChange={formik.handleChange}
                     error={formik.errors.issuer}
-                    tooltip='The name of the issuer (case-insensitive) or the format used to generate one.'
+                    tooltip={t.issuerTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

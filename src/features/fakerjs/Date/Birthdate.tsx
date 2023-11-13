@@ -18,8 +18,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random birthdate.`;
-
 const Schema = z.object({
     min: z.number().nonnegative(),
     max: z.number().nonnegative(),
@@ -31,6 +29,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.birthdate>;
 
 export function Birthdate() {
+    const t = useDict().date.birthdate;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -48,8 +47,8 @@ export function Birthdate() {
 
             if (min > max) {
                 setErrors({
-                    min: 'Min must be less than or equal to Max',
-                    max: 'Max must be greater than or equal to Min',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -61,51 +60,51 @@ export function Birthdate() {
                 refDate: values.refDate.toDate(),
             });
             setOutput(birthdate);
-            toast.success('Faked birthdate!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Birthdate' id='birthdate' tooltip={tooltip}>
+        <FakerSection title={t.title} id='birthdate' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The minimum age or year to generate a birthdate.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The maximum age or year to generate a birthdate.'
+                    tooltip={t.maxTooltip}
                 />
                 <Select
-                    label='Mode'
+                    label={t.modeLabel}
                     name='mode'
                     value={formik.values.mode}
                     onChange={formik.handleChange}
                     tooltip={<ModeTooltip />}
                     options={[
-                        { label: 'Age', value: 'age' },
-                        { label: 'Year', value: 'year' },
+                        { label: t.optionAge, value: 'age' },
+                        { label: t.optionYear, value: 'year' },
                     ]}
                 />
                 <DatePicker
-                    label='Reference Date'
+                    label={t.refDateLabel}
                     name='refDate'
                     value={formik.values.refDate}
                     onChange={(date) => {
                         formik.setFieldValue('refDate', date);
                     }}
                     error={formik.errors.refDate as string}
-                    tooltip='The date to use as reference point for the newly generated date.'
+                    tooltip={t.refDateTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />
@@ -114,16 +113,14 @@ export function Birthdate() {
 }
 
 function ModeTooltip() {
+    const t = useDict().date.birthdate;
+
     return (
         <div>
-            {`The mode to generate the birthdate. Supported modes are 'age' and 'year' . There are two modes available 'age' and 'year': `}
+            {t.modeTooltip1}
             <ul className='flex flex-col gap-2 pl-2 pt-2'>
-                <li>
-                    {`'age': The min and max options define the age of the person (e.g. 18 - 42).`}
-                </li>
-                <li>
-                    {`'year': The min and max options define the range the birthdate may be in (e.g. 1900 - 2000).`}
-                </li>
+                <li>{t.modeTooltip2}</li>
+                <li>{t.modeTooltip3}</li>
             </ul>
         </div>
     );

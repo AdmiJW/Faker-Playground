@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random image url.`;
-
 const Schema = z.object({
     height: z.number().nonnegative(),
     width: z.number().nonnegative(),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.url>;
 
 export function Url() {
+    const t = useDict().image.url;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,30 +36,30 @@ export function Url() {
                 width: values.width,
             });
             setOutput(url);
-            toast.success('Faked url!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='URL' id='url' tooltip={tooltip}>
+        <FakerSection title={t.title} id='url' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Height'
+                    label={t.heightLabel}
                     name='height'
                     value={formik.values.height.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.height}
-                    tooltip='The height of the image.'
+                    tooltip={t.heightTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Width'
+                    label={t.widthLabel}
                     name='width'
                     value={formik.values.width.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.width}
-                    tooltip='The width of the image.'
+                    tooltip={t.widthTooltip}
                 />
             </div>
             <Output

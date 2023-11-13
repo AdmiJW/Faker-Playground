@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random localized county, or other equivalent second-level administrative entity for the locale's country such as a district or department.`;
-
 type Output = ReturnType<typeof faker.location.county>;
 
 export function County() {
+    const t = useDict().location.county;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.location.county());
-        toast.success('Faked county!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='County' id='county' tooltip={tooltip}>
+        <FakerSection title={t.title} id='county' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

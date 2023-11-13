@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random file name with a given extension or a commonly used extension.`;
-
 const Schema = z.object({
     ext: z.string().optional(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.system.commonFileName>;
 
 export function CommonFileName() {
+    const t = useDict().system.commonFileName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -32,24 +31,20 @@ export function CommonFileName() {
         onSubmit: (values) => {
             const commonFileName = faker.system.commonFileName(values.ext);
             setOutput(commonFileName);
-            toast.success('Faked common file name!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Common File Name'
-            id='common-file-name'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='common-file-name' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Extension'
+                    label={t.extensionLabel}
                     name='ext'
                     value={formik.values.ext || ''}
                     onChange={formik.handleChange}
                     error={formik.errors.ext}
-                    tooltip='Extension. Empty string is considered to be not set.'
+                    tooltip={t.extensionTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

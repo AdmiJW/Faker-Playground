@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a material of a product.`;
-
 type Output = ReturnType<typeof faker.commerce.productMaterial>;
 
 export function ProductMaterial() {
+    const t = useDict().commerce.productMaterial;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.commerce.productMaterial());
-        toast.success('Faked product material!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Product Material'
-            id='product-material'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='product-material' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

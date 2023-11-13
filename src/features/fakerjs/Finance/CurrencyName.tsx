@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random currency name.`;
-
 type Output = ReturnType<typeof faker.finance.currencyName>;
 
 export function CurrencyName() {
+    const t = useDict().finance.currencyName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.currencyName());
-        toast.success('Faked currency name!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Currency Name'
-            id='currency-name'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='currency-name' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random database column name.`;
-
 type Output = ReturnType<typeof faker.database.column>;
 
 export function Column() {
+    const t = useDict().database.column;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.database.column());
-        toast.success('Faked column!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Column' id='column' tooltip={tooltip}>
+        <FakerSection title={t.title} id='column' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

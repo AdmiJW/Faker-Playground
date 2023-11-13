@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random localized secondary address. This refers to a specific location at a given address such as an apartment or room number.`;
-
 type Output = ReturnType<typeof faker.location.secondaryAddress>;
 
 export function SecondaryAddress() {
+    const t = useDict().location.secondaryAddress;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.location.secondaryAddress());
-        toast.success('Faked secondary address!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='Secondary Address'
+            title={t.title}
             id='secondary-address'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

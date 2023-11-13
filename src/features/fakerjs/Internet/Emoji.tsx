@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random emoji.`;
-
 type Output = ReturnType<typeof faker.internet.emoji>;
 
 export function Emoji() {
+    const t = useDict().internet.emoji;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.emoji());
-        toast.success('Faked emoji!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Emoji' id='emoji' tooltip={tooltip}>
+        <FakerSection title={t.title} id='emoji' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

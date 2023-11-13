@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random GPS coordinate within the specified radius from the given coordinate.`;
-
 const Schema = z.object({
     isMetric: z.boolean(),
     originLatitude: z.number().min(-90).max(90).optional(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.nearbyGPSCoordinate>;
 
 export function NearbyGPSCoordinate() {
+    const t = useDict().location.nearbyGPSCoordinate;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -53,7 +52,7 @@ export function NearbyGPSCoordinate() {
                 radius: values.radius,
             });
             setOutput(nearbyGPSCoordinate);
-            toast.success('Faked nearby GPS coordinate!');
+            toast.success(t.success);
         },
     });
 
@@ -64,47 +63,47 @@ export function NearbyGPSCoordinate() {
 
     return (
         <FakerSection
-            title='Nearby GPS Coordinate'
+            title={t.title}
             id='nearby-gps-coordinate'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Metric'
+                    label={t.metricLabel}
                     onChange={(newValue) =>
                         formik.setFieldValue('isMetric', newValue)
                     }
                     checked={formik.values.isMetric}
-                    tooltip='If true assume the radius to be in kilometers. If false for miles.'
+                    tooltip={t.metricTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Origin Latitude'
+                    label={t.originLatitudeLabel}
                     name='originLatitude'
                     value={formik.values.originLatitude?.toString() || ''}
                     onChange={formik.handleChange}
                     error={formik.errors.originLatitude}
-                    tooltip='The original coordinate to get a new coordinate close to. If no coordinate is given, a random one will be chosen.'
+                    tooltip={t.originLatitudeTooltip}
                     randomFn={randomizeLatitude}
                 />
                 <TextInput
                     type='number'
-                    label='Origin Longitude'
+                    label={t.originLongitudeLabel}
                     name='originLongitude'
                     value={formik.values.originLongitude?.toString() || ''}
                     onChange={formik.handleChange}
                     error={formik.errors.originLongitude}
-                    tooltip='The original coordinate to get a new coordinate close to. If no coordinate is given, a random one will be chosen.'
+                    tooltip={t.originLongitudeTooltip}
                     randomFn={randomizeLongitude}
                 />
                 <TextInput
                     type='number'
-                    label='Radius'
+                    label={t.radiusLabel}
                     name='radius'
                     value={formik.values.radius.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.radius}
-                    tooltip='The maximum distance from the given coordinate to the new coordinate.'
+                    tooltip={t.radiusTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

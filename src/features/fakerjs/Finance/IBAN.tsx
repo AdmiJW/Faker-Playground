@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random iban.`;
-
 const Schema = z.object({
     countryCode: z.string().optional(),
     formatted: z.boolean(),
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.iban>;
 
 export function IBAN() {
+    const t = useDict().finance.iban;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,28 +41,28 @@ export function IBAN() {
                 formatted: values.formatted,
             });
             setOutput(IBAN);
-            toast.success('Faked IBAN!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='IBAN' id='iban' tooltip={tooltip}>
+        <FakerSection title={t.title} id='iban' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Country Code'
+                    label={t.countryCodeLabel}
                     name='countryCode'
                     onChange={formik.handleChange}
-                    tooltip='The country code from which you want to generate an IBAN, if none is provided a random country will be used.'
+                    tooltip={t.countryCodeTooltip}
                     value={formik.values.countryCode || ''}
                     error={formik.errors.countryCode}
                 />
                 <Checkbox
-                    label='Formatted'
+                    label={t.formattedLabel}
                     checked={formik.values.formatted}
                     onChange={(newValue) =>
                         formik.setFieldValue('formatted', newValue)
                     }
-                    tooltip='Return a formatted version of the generated IBAN.'
+                    tooltip={t.formattedTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

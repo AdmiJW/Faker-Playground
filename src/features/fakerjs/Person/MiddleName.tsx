@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random middle name.`;
-
 const Schema = z.object({
     sex: z.enum(['female', 'male']),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.person.middleName>;
 
 export function MiddleName() {
+    const t = useDict().person.middleName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -32,22 +31,22 @@ export function MiddleName() {
         onSubmit: (values) => {
             const middleName = faker.person.middleName(values.sex);
             setOutput(middleName);
-            toast.success('Faked middle name!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Middle Name' id='middle-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='middle-name' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Sex'
+                    label={t.sexLabel}
                     name='sex'
                     value={formik.values.sex}
                     onChange={formik.handleChange}
-                    tooltip="The optional sex to use. Can be either 'female' or 'male'."
+                    tooltip={t.sexTooltip}
                     options={[
-                        { label: 'Female', value: 'female' },
-                        { label: 'Male', value: 'male' },
+                        { label: t.optionFemale, value: 'female' },
+                        { label: t.optionMale, value: 'male' },
                     ]}
                 />
             </div>

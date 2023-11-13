@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random localized street address.`;
-
 const Schema = z.object({
     useFullAddress: z.boolean(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.streetAddress>;
 
 export function StreetAddress() {
+    const t = useDict().location.streetAddress;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,20 +33,16 @@ export function StreetAddress() {
                 useFullAddress: values.useFullAddress,
             });
             setOutput(streetAddress);
-            toast.success('Faked street address!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Street Address'
-            id='street-address'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='street-address' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Use Full Address'
-                    tooltip='When true this will generate a full address. Otherwise it will just generate a street address.'
+                    label={t.useFullAddressLabel}
+                    tooltip={t.useFullAddressTooltip}
                     checked={formik.values.useFullAddress}
                     onChange={(newValue) =>
                         formik.setFieldValue('useFullAddress', newValue)

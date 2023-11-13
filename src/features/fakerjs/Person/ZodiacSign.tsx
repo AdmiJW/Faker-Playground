@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random zodiac sign.`;
-
 type Output = ReturnType<typeof faker.person.zodiacSign>;
 
 export function ZodiacSign() {
+    const t = useDict().person.zodiacSign;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.person.zodiacSign());
-        toast.success('Faked zodiac sign!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Zodiac Sign' id='zodiac-sign' tooltip={tooltip}>
+        <FakerSection title={t.title} id='zodiac-sign' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

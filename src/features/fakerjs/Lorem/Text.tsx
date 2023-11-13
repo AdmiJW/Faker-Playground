@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random text based on a random lorem method.`;
-
 type Output = ReturnType<typeof faker.lorem.text>;
 
 export function Text() {
+    const t = useDict().lorem.text;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.lorem.text());
-        toast.success('Faked text!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Text' id='text' tooltip={tooltip}>
+        <FakerSection title={t.title} id='text' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

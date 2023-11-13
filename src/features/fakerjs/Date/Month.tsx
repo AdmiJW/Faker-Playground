@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random name of a month.`;
-
 const Schema = z.object({
     abbreviated: z.boolean(),
     context: z.boolean(),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.month>;
 
 export function Month() {
+    const t = useDict().date.month;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,25 +36,25 @@ export function Month() {
                 context: values.context,
             });
             setOutput(month);
-            toast.success('Faked month!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Month' id='month' tooltip={tooltip}>
+        <FakerSection title={t.title} id='month' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col'>
                 <Checkbox
                     checked={formik.values.abbreviated}
-                    label='Abbreviated'
-                    tooltip='Whether to return an abbreviation.'
+                    label={t.abbreviatedLabel}
+                    tooltip={t.abbreviatedTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue('abbreviated', newValue)
                     }
                 />
                 <Checkbox
                     checked={formik.values.context}
-                    label='Context'
-                    tooltip="Whether to return the name of a month in the context of a date. In the default en locale this has no effect, however, in other locales like fr or ru, this may affect grammar or capitalization, for example 'январь' with { context: false } and 'января' with { context: true } in ru."
+                    label={t.contextLabel}
+                    tooltip={t.contextTooltip}
                     onChange={(newValue) =>
                         formik.setFieldValue('context', newValue)
                     }

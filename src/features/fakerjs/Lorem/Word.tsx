@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a word of a specified length.`;
-
 const Schema = z.object({
     min: z.number().int().nonnegative(),
     max: z.number().int().nonnegative(),
@@ -27,6 +25,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.lorem.word>;
 
 export function Word() {
+    const t = useDict().lorem.word;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,8 +41,8 @@ export function Word() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -56,43 +55,43 @@ export function Word() {
                 strategy: values.strategy,
             });
             setOutput(word);
-            toast.success('Faked word!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Word' id='word' tooltip={tooltip}>
+        <FakerSection title={t.title} id='word' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The expected length of the word.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The expected length of the word.'
+                    tooltip={t.maxTooltip}
                 />
                 <Select
-                    label='Strategy'
+                    label={t.strategyLabel}
                     name='strategy'
                     value={formik.values.strategy}
                     onChange={formik.handleChange}
-                    tooltip='The strategy to use when generating the word.'
+                    tooltip={t.strategyTooltip}
                     options={[
-                        { label: 'Any length', value: 'any-length' },
-                        { label: 'Closest', value: 'closest' },
-                        { label: 'Fail', value: 'fail' },
-                        { label: 'Longest', value: 'longest' },
-                        { label: 'Shortest', value: 'shortest' },
+                        { label: t.optionAnyLength, value: 'any-length' },
+                        { label: t.optionClosest, value: 'closest' },
+                        { label: t.optionFail, value: 'fail' },
+                        { label: t.optionLongest, value: 'longest' },
+                        { label: t.optionShortest, value: 'shortest' },
                     ]}
                 />
             </div>

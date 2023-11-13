@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random web protocol. Either http or https.`;
-
 type Output = ReturnType<typeof faker.internet.protocol>;
 
 export function Protocol() {
+    const t = useDict().internet.protocol;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.protocol());
-        toast.success('Faked protocol!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Protocol' id='protocol' tooltip={tooltip}>
+        <FakerSection title={t.title} id='protocol' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates an email address using the given person's name as base.`;
-
 const Schema = z.object({
     allowSpecialCharacters: z.boolean(),
     firstName: z.string().optional(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.email>;
 
 export function Email() {
+    const t = useDict().internet.email;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -48,7 +47,7 @@ export function Email() {
                 provider: values.provider ? values.provider : undefined,
             });
             setOutput(email);
-            toast.success('Faked email!');
+            toast.success(t.success);
         },
     });
 
@@ -59,41 +58,41 @@ export function Email() {
         formik.setFieldValue('lastName', faker.person.lastName());
 
     return (
-        <FakerSection title='Email' id='email' tooltip={tooltip}>
+        <FakerSection title={t.title} id='email' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Allow Special Characters'
-                    tooltip="Whether special characters such as .!#$%&'*+-/=?^_`{|}~ should be included in the email address."
+                    label={t.allowSpecialCharactersLabel}
+                    tooltip={t.allowSpecialCharactersTooltip}
                     checked={formik.values.allowSpecialCharacters}
                     onChange={(newValue) =>
                         formik.setFieldValue('allowSpecialCharacters', newValue)
                     }
                 />
                 <TextInput
-                    label='First Name'
+                    label={t.firstNameLabel}
                     name='firstName'
                     value={formik.values.firstName ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.firstName}
-                    tooltip='The optional first name to use.'
+                    tooltip={t.firstNameTooltip}
                     randomFn={randomizeFirstName}
                 />
                 <TextInput
-                    label='Last Name'
+                    label={t.lastNameLabel}
                     name='lastName'
                     value={formik.values.lastName ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.lastName}
-                    tooltip='The optional last name to use.'
+                    tooltip={t.lastNameTooltip}
                     randomFn={randomizeLastName}
                 />
                 <TextInput
-                    label='Provider'
+                    label={t.providerLabel}
                     name='provider'
                     value={formik.values.provider ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.provider}
-                    tooltip='The mail provider domain to use. If not specified, a random free mail provider will be chosen.'
+                    tooltip={t.providerTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a string containing only special characters from the following list: ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ \` { | } ~`;
-
 const Schema = z.object({
     min: z.number().int().nonnegative(),
     max: z.number().int().nonnegative(),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.symbol>;
 
 export function Symbol() {
+    const t = useDict().string.symbol;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -35,8 +34,8 @@ export function Symbol() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -46,30 +45,30 @@ export function Symbol() {
                 max: values.max,
             });
             setOutput(symbol);
-            toast.success('Faked symbol!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Symbol' id='symbol' tooltip={tooltip}>
+        <FakerSection title={t.title} id='symbol' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The minimum number of special characters to generate.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The maximum number of special characters to generate.'
+                    tooltip={t.maxTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

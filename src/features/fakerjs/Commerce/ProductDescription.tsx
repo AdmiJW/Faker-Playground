@@ -11,11 +11,10 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a product description.`;
-
 type Output = ReturnType<typeof faker.commerce.productDescription>;
 
 export function ProductDescription() {
+    const t = useDict().commerce.productDescription;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -27,9 +26,9 @@ export function ProductDescription() {
 
     return (
         <FakerSection
-            title='Product Description'
+            title={t.title}
             id='product-description'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

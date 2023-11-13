@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random credit card CVV.`;
-
 type Output = ReturnType<typeof faker.finance.creditCardCVV>;
 
 export function CreditCardCVV() {
+    const t = useDict().finance.creditCardCvv;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.creditCardCVV());
-        toast.success('Faked credit card CVV!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Credit Card CVV'
-            id='credit-card-cvv'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='credit-card-cvv' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random image url provided via https://loremflickr.com.`;
-
 const Schema = z.object({
     category: z.string().optional(),
     height: z.number().nonnegative(),
@@ -22,6 +20,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.urlLoremFlickr>;
 
 export function UrlLoremFlickr() {
+    const t = useDict().image.urlLoremFlickr;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -40,42 +39,38 @@ export function UrlLoremFlickr() {
                 width: values.width,
             });
             setOutput(url);
-            toast.success('Faked url lorem flickr!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='URL Lorem Flickr'
-            id='url-lorem-flickr'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='url-lorem-flickr' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Category'
+                    label={t.categoryLabel}
                     name='category'
                     value={formik.values.category ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.category}
-                    tooltip='Category to use for the image.'
+                    tooltip={t.categoryTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Height'
+                    label={t.heightLabel}
                     name='height'
                     value={formik.values.height.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.height}
-                    tooltip='The height of the image.'
+                    tooltip={t.heightTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Width'
+                    label={t.widthLabel}
                     name='width'
                     value={formik.values.width.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.width}
-                    tooltip='The width of the image.'
+                    tooltip={t.widthTooltip}
                 />
             </div>
             <Output

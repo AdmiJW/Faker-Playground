@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random PIN number.`;
-
 const Schema = z.object({
     length: z.number().int().nonnegative(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.pin>;
 
 export function PIN() {
+    const t = useDict().finance.pin;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,19 +33,19 @@ export function PIN() {
                 length: values.length,
             });
             setOutput(pin);
-            toast.success('Faked PIN!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='PIN' id='pin' tooltip={tooltip}>
+        <FakerSection title={t.title} id='pin' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Length'
+                    label={t.lengthLabel}
                     name='length'
                     onChange={formik.handleChange}
-                    tooltip='The length of the unmasked number.'
+                    tooltip={t.lengthTooltip}
                     value={formik.values.length.toString()}
                     error={formik.errors.length}
                 />

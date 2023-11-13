@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random human-readable color name.`;
-
 type Output = ReturnType<typeof faker.color.human>;
 
 export function Human() {
+    const t = useDict().color.human;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.color.human());
-        toast.success('Faked human!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Human' id='human' tooltip={tooltip}>
+        <FakerSection title={t.title} id='human' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

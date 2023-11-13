@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates IMEI number.`;
-
 type Output = ReturnType<typeof faker.phone.imei>;
 
 export function IMEI() {
+    const t = useDict().phone.imei;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.phone.imei());
-        toast.success('Faked imei!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='IMEI' id='imei' tooltip={tooltip}>
+        <FakerSection title={t.title} id='imei' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

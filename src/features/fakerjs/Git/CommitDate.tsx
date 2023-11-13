@@ -16,8 +16,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a date string for a git commit using the same format as git log.`;
-
 const Schema = z.object({
     refDate: zodDate,
 });
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.git.commitDate>;
 
 export function CommitDate() {
+    const t = useDict().git.commitDate;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -40,22 +39,22 @@ export function CommitDate() {
                 refDate: values.refDate.toDate(),
             });
             setOutput(commitDate);
-            toast.success('Faked commit date!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Commit Date' id='commit-date' tooltip={tooltip}>
+        <FakerSection title={t.title} id='commit-date' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <DatePicker
-                    label='Reference Date'
+                    label={t.refDateLabel}
                     name='refDate'
                     value={formik.values.refDate}
                     onChange={(newDate) =>
                         formik.setFieldValue('refDate', newDate)
                     }
                     error={formik.errors.refDate as string}
-                    tooltip='The date to use as reference point for the commit.'
+                    tooltip={t.refDateTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

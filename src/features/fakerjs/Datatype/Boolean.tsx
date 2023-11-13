@@ -10,14 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Slider } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `
-    Returns the boolean value true or false.
-    Note: A probability of 0.75 results in true being returned 75% of the calls; 
-    likewise 0.3 => 30%. If the probability is <= 0.0, it will always return false. 
-    If the probability is >= 1.0, it will always return true. 
-    The probability is limited to two decimal places.
-`;
-
 const Schema = z.object({
     probability: z.number().min(0).max(1).step(0.01),
 });
@@ -26,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.datatype.boolean>;
 
 export function Boolean() {
+    const t = useDict().datatype.boolean;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -40,22 +33,22 @@ export function Boolean() {
                 probability: values.probability,
             });
             setOutput(boolean);
-            toast.success('Faked boolean!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Boolean' id='boolean' tooltip={tooltip}>
+        <FakerSection title={t.title} id='boolean' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Slider
-                    label='Probability'
+                    label={t.probabilityLabel}
                     name='probability'
                     value={formik.values.probability}
                     onChange={formik.handleChange}
                     min={0}
                     max={1}
                     step={0.01}
-                    tooltip='The probability ([0.00, 1.00]) of returning true.'
+                    tooltip={t.probabilityTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

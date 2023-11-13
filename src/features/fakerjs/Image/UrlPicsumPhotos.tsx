@@ -16,8 +16,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random image url provided via https://picsum.photos.`;
-
 const Schema = z.object({
     blur: z.number().int().min(0).max(10),
     grayscale: z.boolean(),
@@ -29,6 +27,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.urlPicsumPhotos>;
 
 export function UrlPicsumPhotos() {
+    const t = useDict().image.urlPicsumPhotos;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -49,52 +48,52 @@ export function UrlPicsumPhotos() {
                 width: values.width,
             });
             setOutput(url);
-            toast.success('Faked url picsum photos!');
+            toast.success(t.success);
         },
     });
 
     return (
         <FakerSection
-            title='URL Picsum Photos'
+            title={t.title}
             id='url-picsum-photos'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <Slider
-                    label='Blur'
+                    label={t.blurLabel}
                     name='blur'
                     value={formik.values.blur}
                     onChange={formik.handleChange}
-                    tooltip='Whether the image should be blurred.'
+                    tooltip={t.blurTooltip}
                     min={0}
                     max={10}
                     step={1}
                 />
                 <Checkbox
                     checked={formik.values.grayscale}
-                    label='Grayscale'
+                    label={t.greyscaleLabel}
                     onChange={(newValue) =>
                         formik.setFieldValue('grayscale', newValue)
                     }
-                    tooltip='Whether the image should be grayscale.'
+                    tooltip={t.greyscaleTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Height'
+                    label={t.heightLabel}
                     name='height'
                     value={formik.values.height.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.height}
-                    tooltip='The height of the image.'
+                    tooltip={t.heightTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Width'
+                    label={t.widthLabel}
                     name='width'
                     value={formik.values.width.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.width}
-                    tooltip='The width of the image.'
+                    tooltip={t.widthTooltip}
                 />
             </div>
             <Output

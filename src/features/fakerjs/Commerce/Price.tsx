@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a price between min and max (inclusive).`;
-
 const Schema = z.object({
     dec: z.number().int().nonnegative(),
     max: z.number().int().nonnegative(),
@@ -23,6 +21,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.commerce.price>;
 
 export function Price() {
+    const t = useDict().commerce.price;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -39,8 +38,8 @@ export function Price() {
             const isMinGreaterThanMax = values.min > values.max;
             if (isMinGreaterThanMax) {
                 setErrors({
-                    max: 'Max must be greater than min.',
-                    min: 'Min must be less than max.',
+                    max: t.errorMaxMustBeGreaterThanMin,
+                    min: t.errorMinMustBeLessThanMax,
                 });
                 return;
             }
@@ -52,45 +51,45 @@ export function Price() {
                 symbol: values.symbol,
             });
             setOutput(price);
-            toast.success('Faked price!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Price' id='price' tooltip={tooltip}>
+        <FakerSection title={t.title} id='price' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Decimals'
+                    label={t.decimalsLabel}
                     name='dec'
                     onChange={formik.handleChange}
-                    tooltip='The number of decimal places.'
+                    tooltip={t.decimalsTooltip}
                     value={formik.values.dec.toString()}
                     error={formik.errors.dec}
                 />
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     onChange={formik.handleChange}
-                    tooltip='The minimum price.'
+                    tooltip={t.minTooltip}
                     value={formik.values.min.toString()}
                     error={formik.errors.min}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     onChange={formik.handleChange}
-                    tooltip='The maximum price.'
+                    tooltip={t.maxTooltip}
                     value={formik.values.max.toString()}
                     error={formik.errors.max}
                 />
                 <TextInput
-                    label='Symbol'
+                    label={t.symbolLabel}
                     name='symbol'
                     onChange={formik.handleChange}
-                    tooltip='The currency value to use.'
+                    tooltip={t.symbolTooltip}
                     value={formik.values.symbol || ''}
                     error={formik.errors.symbol}
                 />

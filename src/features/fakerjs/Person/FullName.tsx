@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random full name.`;
-
 const Schema = z.object({
     firstName: z.string().optional(),
     lastName: z.string().optional(),
@@ -27,6 +25,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.person.fullName>;
 
 export function FullName() {
+    const t = useDict().person.fullName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -46,7 +45,7 @@ export function FullName() {
                 sex: values.sex,
             });
             setOutput(fullName);
-            toast.success('Faked full name!');
+            toast.success(t.success);
         },
     });
 
@@ -63,35 +62,35 @@ export function FullName() {
         );
 
     return (
-        <FakerSection title='Full Name' id='full-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='full-name' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='First Name'
+                    label={t.firstNameLabel}
                     name='firstName'
                     error={formik.errors.firstName}
                     value={formik.values.firstName ?? ''}
                     onChange={formik.handleChange}
-                    tooltip='The optional first name.'
+                    tooltip={t.firstNameTooltip}
                     randomFn={randomizeFirstName}
                 />
                 <TextInput
-                    label='Last Name'
+                    label={t.lastNameLabel}
                     name='lastName'
                     error={formik.errors.lastName}
                     value={formik.values.lastName ?? ''}
                     onChange={formik.handleChange}
-                    tooltip='The optional last name.'
+                    tooltip={t.lastNameTooltip}
                     randomFn={randomizeLastName}
                 />
                 <Select
-                    label='Sex'
+                    label={t.sexLabel}
                     name='sex'
                     value={formik.values.sex}
                     onChange={formik.handleChange}
-                    tooltip="The optional sex to use. Can be either 'female' or 'male'."
+                    tooltip={t.sexTooltip}
                     options={[
-                        { label: 'Female', value: 'female' },
-                        { label: 'Male', value: 'male' },
+                        { label: t.optionFemale, value: 'female' },
+                        { label: t.optionMale, value: 'male' },
                     ]}
                 />
             </div>

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a manufacturer name.`;
-
 type Output = ReturnType<typeof faker.vehicle.manufacturer>;
 
 export function Manufacturer() {
+    const t = useDict().vehicle.manufacturer;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.vehicle.manufacturer());
-        toast.success('Faked manufacturer!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Manufacturer' id='manufacturer' tooltip={tooltip}>
+        <FakerSection title={t.title} id='manufacturer' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

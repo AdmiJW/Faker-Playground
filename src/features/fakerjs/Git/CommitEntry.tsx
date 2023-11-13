@@ -18,8 +18,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random commit entry as printed by git log.`;
-
 const Schema = z.object({
     eol: z.enum(['CRLF', 'LF']),
     merge: z.boolean(),
@@ -30,6 +28,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.git.commitEntry>;
 
 export function CommitEntry() {
+    const t = useDict().git.commitEntry;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -48,41 +47,41 @@ export function CommitEntry() {
                 refDate: values.refDate.toDate(),
             });
             setOutput(commitEntry);
-            toast.success('Faked commit entry!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Commit Entry' id='commit-entry' tooltip={tooltip}>
+        <FakerSection title={t.title} id='commit-entry' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='EOL'
+                    label={t.eolLabel}
                     name='eol'
                     value={formik.values.eol}
                     onChange={formik.handleChange}
-                    tooltip="Choose the end of line character to use. 'LF' = '\n', 'CRLF' = '\r\n'"
+                    tooltip={t.eolTooltip}
                     options={[
-                        { label: 'LF', value: 'LF' },
-                        { label: 'CRLF', value: 'CRLF' },
+                        { label: 'LF', value: t.optionLF },
+                        { label: 'CRLF', value: t.optionCRLF },
                     ]}
                 />
                 <Checkbox
-                    label='Merge'
+                    label={t.mergeLabel}
                     checked={formik.values.merge}
                     onChange={(newValue) =>
                         formik.setFieldValue('merge', newValue)
                     }
-                    tooltip='Set to true to generate a merge message line.'
+                    tooltip={t.mergeTooltip}
                 />
                 <DatePicker
-                    label='Reference Date'
+                    label={t.refDateLabel}
                     name='refDate'
                     value={formik.values.refDate}
                     onChange={(newDate) =>
                         formik.setFieldValue('refDate', newDate)
                     }
                     error={formik.errors.refDate as string}
-                    tooltip='The date to use as reference point for the commit.'
+                    tooltip={t.refDateTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

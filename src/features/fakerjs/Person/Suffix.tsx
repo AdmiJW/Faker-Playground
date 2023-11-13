@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random person suffix.`;
-
 type Output = ReturnType<typeof faker.person.suffix>;
 
 export function Suffix() {
+    const t = useDict().person.suffix;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.person.suffix());
-        toast.success('Faked suffix!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Suffix' id='suffix' tooltip={tooltip}>
+        <FakerSection title={t.title} id='suffix' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

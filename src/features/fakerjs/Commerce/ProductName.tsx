@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random descriptive product name.`;
-
 type Output = ReturnType<typeof faker.commerce.productName>;
 
 export function ProductName() {
+    const t = useDict().commerce.productName;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.commerce.productName());
-        toast.success('Faked product name!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Product Name' id='product-name' tooltip={tooltip}>
+        <FakerSection title={t.title} id='product-name' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

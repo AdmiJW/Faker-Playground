@@ -11,11 +11,10 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random hacker/IT verb.`;
-
 type Output = ReturnType<typeof faker.hacker.verb>;
 
 export function Verb() {
+    const t = useDict().hacker.verb;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -26,7 +25,7 @@ export function Verb() {
     };
 
     return (
-        <FakerSection title='Verb' id='verb' tooltip={tooltip}>
+        <FakerSection title={t.title} id='verb' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random domain suffix.`;
-
 type Output = ReturnType<typeof faker.internet.domainSuffix>;
 
 export function DomainSuffix() {
+    const t = useDict().internet.domainSuffix;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.domainSuffix());
-        toast.success('Faked domain suffix!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Domain Suffix'
-            id='domain-suffix'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='domain-suffix' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random SWIFT/BIC code based on the ISO-9362 format.`;
-
 const Schema = z.object({
     includeBranchCode: z.boolean(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.bic>;
 
 export function BIC() {
+    const t = useDict().finance.bic;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,20 +33,20 @@ export function BIC() {
                 includeBranchCode: values.includeBranchCode,
             });
             setOutput(BIC);
-            toast.success('Faked BIC!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='BIC' id='bic' tooltip={tooltip}>
+        <FakerSection title={t.title} id='bic' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Include Branch Code'
+                    label={t.includeBranchCodeLabel}
                     checked={formik.values.includeBranchCode}
                     onChange={(newValue) =>
                         formik.setFieldValue('includeBranchCode', newValue)
                     }
-                    tooltip='Whether to include a three-digit branch code at the end of the generated code.'
+                    tooltip={t.includeBranchCodeTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a single random floating-point number for a given precision or range and precision.`;
-
 const Schema = z.object({
     min: z.number(),
     max: z.number(),
@@ -22,6 +20,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.number.float>;
 
 export function Float() {
+    const t = useDict().number.float;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,8 +36,8 @@ export function Float() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -49,39 +48,39 @@ export function Float() {
                 precision: values.precision,
             });
             setOutput(float);
-            toast.success('Faked float!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Float' id='float' tooltip={tooltip}>
+        <FakerSection title={t.title} id='float' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='Lower bound for generated number.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='Upper bound for generated number.'
+                    tooltip={t.maxTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Precision'
+                    label={t.precisionLabel}
                     name='precision'
                     value={formik.values.precision.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.precision}
-                    tooltip='Precision of the generated number.'
+                    tooltip={t.precisionTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

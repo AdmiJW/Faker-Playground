@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random http method.`;
-
 type Output = ReturnType<typeof faker.internet.httpMethod>;
 
 export function HttpMethod() {
+    const t = useDict().internet.httpMethod;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.httpMethod());
-        toast.success('Faked http method!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='HTTP Method' id='http-method' tooltip={tooltip}>
+        <FakerSection title={t.title} id='http-method' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

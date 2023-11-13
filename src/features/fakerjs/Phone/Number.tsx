@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random phone number.`;
-
 const Schema = z.object({
     format: z.string().optional(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.phone.number>;
 
 export function Number() {
+    const t = useDict().phone.number;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -32,20 +31,20 @@ export function Number() {
         onSubmit: (values) => {
             const number = faker.phone.number(values.format);
             setOutput(number);
-            toast.success('Faked number!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Number' id='number' tooltip={tooltip}>
+        <FakerSection title={t.title} id='number' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Format'
+                    label={t.formatLabel}
                     name='format'
                     value={formik.values.format ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.format}
-                    tooltip='Format of the phone number. Defaults to a random phone number format.'
+                    tooltip={t.formatTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

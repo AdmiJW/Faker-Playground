@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random localized state, or other equivalent first-level administrative entity for the locale's country such as a province or region.`;
-
 const Schema = z.object({
     abbreviated: z.boolean(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.state>;
 
 export function State() {
+    const t = useDict().location.state;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,16 +33,16 @@ export function State() {
                 abbreviated: values.abbreviated,
             });
             setOutput(state);
-            toast.success('Faked state!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='State' id='state' tooltip={tooltip}>
+        <FakerSection title={t.title} id='state' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Abbreviated'
-                    tooltip='If true this will return abbreviated first-level administrative entity names. Otherwise this will return the long name.'
+                    label={t.abbreviatedLabel}
+                    tooltip={t.abbreviatedTooltip}
                     checked={formik.values.abbreviated}
                     onChange={(newValue) =>
                         formik.setFieldValue('abbreviated', newValue)

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a semantic version.`;
-
 type Output = ReturnType<typeof faker.system.semver>;
 
 export function SemVer() {
+    const t = useDict().system.semVer;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.system.semver());
-        toast.success('Faked sem ver!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Sem Ver' id='sem-ver' tooltip={tooltip}>
+        <FakerSection title={t.title} id='sem-ver' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

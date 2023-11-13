@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a given length string of digits.`;
-
 const Schema = z.object({
     allowLeadingZeros: z.boolean(),
     exclude: z.string().optional(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.numeric>;
 
 export function Numeric() {
+    const t = useDict().string.numeric;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -44,8 +43,8 @@ export function Numeric() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -59,46 +58,46 @@ export function Numeric() {
                 },
             });
             setOutput(numeric);
-            toast.success('Faked numeric!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Numeric' id='numeric' tooltip={tooltip}>
+        <FakerSection title={t.title} id='numeric' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Allow Leading Zeros'
+                    label={t.allowLeadingZeroesLabel}
                     checked={formik.values.allowLeadingZeros}
                     onChange={(newValue) =>
                         formik.setFieldValue('allowLeadingZeros', newValue)
                     }
-                    tooltip='Whether leading zeros are allowed or not.'
+                    tooltip={t.allowLeadingZeroesTooltip}
                 />
                 <TextInput
-                    label='Exclude'
+                    label={t.excludeLabel}
                     name='exclude'
                     onChange={formik.handleChange}
                     error={formik.errors.exclude}
-                    tooltip='An array of digits which should be excluded in the generated string.'
+                    tooltip={t.excludeTooltip}
                     value={formik.values.exclude || ''}
                 />
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The number or range of digits to generate.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The number or range of digits to generate.'
+                    tooltip={t.maxTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

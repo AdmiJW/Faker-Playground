@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random ISO_3166-1 country code.`;
-
 const Schema = z.object({
     variant: z.enum(['alpha-2', 'alpha-3', 'numeric']),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.countryCode>;
 
 export function CountryCode() {
+    const t = useDict().location.countryCode;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,23 +33,23 @@ export function CountryCode() {
                 variant: values.variant,
             });
             setOutput(countryCode);
-            toast.success('Faked country code!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Country Code' id='country-code' tooltip={tooltip}>
+        <FakerSection title={t.title} id='country-code' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Variant'
+                    label={t.variantLabel}
                     name='variant'
-                    tooltip="The code to return. Can be either 'alpha-2' (two-letter code), 'alpha-3' (three-letter code) or 'numeric' (numeric code)."
+                    tooltip={t.variantTooltip}
                     onChange={formik.handleChange}
                     value={formik.values.variant}
                     options={[
-                        { label: 'Alpha-2', value: 'alpha-2' },
-                        { label: 'Alpha-3', value: 'alpha-3' },
-                        { label: 'Numeric', value: 'numeric' },
+                        { label: t.optionAlpha2, value: 'alpha-2' },
+                        { label: t.optionAlpha3, value: 'alpha-3' },
+                        { label: t.optionNumeric, value: 'numeric' },
                     ]}
                 />
             </div>

@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random Bitcoin address.`;
-
 type Output = ReturnType<typeof faker.finance.bitcoinAddress>;
 
 export function BitcoinAddress() {
+    const t = useDict().finance.bitcoinAddress;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.bitcoinAddress());
-        toast.success('Faked bitcoin address!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Bitcoin Address'
-            id='bitcoin-address'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='bitcoin-address' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

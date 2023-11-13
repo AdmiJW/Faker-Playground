@@ -10,11 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `
-    Returns an LCH color. Even though upper bound of chroma in LCH color space is theoretically unbounded, 
-    it is bounded to 230 as anything above will not make a noticeable difference in the browser.
-`;
-
 const Schema = z.object({
     format: z.enum(['binary', 'css', 'decimal']),
 });
@@ -23,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.lch>;
 
 export function Lch() {
+    const t = useDict().color.lch;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,24 +33,24 @@ export function Lch() {
                 format: values.format,
             });
             setOutput(lch);
-            toast.success('Faked lch!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='LCH' id='lch' tooltip={tooltip}>
+        <FakerSection title={t.title} id='lch' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     value={formik.values.format}
                     onChange={formik.handleChange}
                     name='format'
                     options={[
-                        { value: 'binary', label: 'Binary' },
-                        { value: 'css', label: 'CSS' },
-                        { value: 'decimal', label: 'Decimal' },
+                        { value: 'binary', label: t.optionBinary },
+                        { value: 'css', label: t.optionCss },
+                        { value: 'decimal', label: t.optionDecimal },
                     ]}
-                    tooltip='Format of generated LCH color.'
+                    tooltip={t.tooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

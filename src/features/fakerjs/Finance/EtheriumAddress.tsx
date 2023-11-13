@@ -11,29 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `
-    Creates a random, non-checksum Ethereum address. To generate a checksummed Ethereum address (with specific per character casing), 
-    wrap this method in a custom method and use third-party libraries to transform the result.
-`;
-
 type Output = ReturnType<typeof faker.finance.ethereumAddress>;
 
 export function EtheriumAddress() {
+    const t = useDict().finance.ethereumAddress;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.ethereumAddress());
-        toast.success('Faked etherium address!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Etherium Address'
-            id='etherium-address'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='etherium-address' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random buzz adjective that can be used to demonstrate data being viewed by a manager.`;
-
 type Output = ReturnType<typeof faker.company.buzzAdjective>;
 
 export function BuzzAdjective() {
+    const t = useDict().company.buzzAdjective;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.company.buzzAdjective());
-        toast.success('Faked buzz adjective!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Buzz Adjective'
-            id='buzz-adjective'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='buzz-adjective' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

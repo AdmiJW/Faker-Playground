@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random data uri containing an URL-encoded SVG image or a Base64-encoded SVG image.`;
-
 const Schema = z.object({
     color: z.string().optional(),
     height: z.number().nonnegative(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.image.dataUri>;
 
 export function DataUri() {
+    const t = useDict().image.dataUri;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -48,48 +47,48 @@ export function DataUri() {
                 type: values.type,
             });
             setOutput(dataUri);
-            toast.success('Faked data URI!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Data URI' id='data-uri' tooltip={tooltip}>
+        <FakerSection title={t.title} id='data-uri' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
-                    label='Color'
+                    label={t.colorLabel}
                     name='color'
                     value={formik.values.color ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.color}
-                    tooltip='The color of the image. Must be a color supported by svg.'
+                    tooltip={t.colorTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Height'
+                    label={t.heightLabel}
                     name='height'
                     value={formik.values.height.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.height}
-                    tooltip='The height of the image.'
+                    tooltip={t.heightTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Width'
+                    label={t.widthLabel}
                     name='width'
                     value={formik.values.width.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.width}
-                    tooltip='The width of the image.'
+                    tooltip={t.widthTooltip}
                 />
                 <Select
-                    label='Type'
+                    label={t.typeLabel}
                     name='type'
                     value={formik.values.type}
                     onChange={formik.handleChange}
-                    tooltip='The type of the image to return. Consisting of the file extension and the used encoding.'
+                    tooltip={t.typeTooltip}
                     options={[
-                        { label: 'SVG Base64', value: 'svg-base64' },
-                        { label: 'SVG URI', value: 'svg-uri' },
+                        { label: t.optionSvgBase64, value: 'svg-base64' },
+                        { label: t.optionSvgUri, value: 'svg-uri' },
                     ]}
                 />
             </div>

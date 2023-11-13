@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random job type.`;
-
 type Output = ReturnType<typeof faker.person.jobType>;
 
 export function JobType() {
+    const t = useDict().person.jobType;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.person.jobType());
-        toast.success('Faked job type!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Job Type' id='job-type' tooltip={tooltip}>
+        <FakerSection title={t.title} id='job-type' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

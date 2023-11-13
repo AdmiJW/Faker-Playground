@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random account number.`;
-
 const Schema = z.object({
     length: z.number().int().nonnegative(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.accountNumber>;
 
 export function AccountNumber() {
+    const t = useDict().finance.accountNumber;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,25 +33,21 @@ export function AccountNumber() {
                 length: values.length,
             });
             setOutput(accountNumber);
-            toast.success('Faked account number!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Account Number'
-            id='account-number'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='account-number' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Length'
+                    label={t.lengthLabel}
                     name='length'
                     value={formik.values.length.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.length}
-                    tooltip='The length of the account number.'
+                    tooltip={t.lengthTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

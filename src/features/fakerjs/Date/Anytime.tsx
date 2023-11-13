@@ -16,8 +16,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random date that can be either in the past or in the future.`;
-
 const Schema = z.object({
     refDate: zodDate,
 });
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.anytime>;
 
 export function Anytime() {
+    const t = useDict().date.anytime;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -40,22 +39,22 @@ export function Anytime() {
                 refDate: values.refDate.toDate(),
             });
             setOutput(anytime);
-            toast.success('Faked anytime!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Anytime' id='anytime' tooltip={tooltip}>
+        <FakerSection title={t.title} id='anytime' tooltip={t.tooltip}>
             <div className='flex-1'>
                 <DatePicker
-                    label='Reference Date'
+                    label={t.refDateLabel}
                     name='refDate'
                     value={formik.values.refDate}
                     onChange={(newDate) =>
                         formik.setFieldValue('refDate', newDate)
                     }
                     error={formik.errors.refDate as string}
-                    tooltip='The date to use as reference point for the newly generated date.'
+                    tooltip={t.refDateTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

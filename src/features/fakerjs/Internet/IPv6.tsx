@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random IPv6 address.`;
-
 type Output = ReturnType<typeof faker.internet.ipv6>;
 
 export function IPv6() {
+    const t = useDict().internet.ipv6;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.ipv6());
-        toast.success('Faked ipv6!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='IPv6' id='ipv6' tooltip={tooltip}>
+        <FakerSection title={t.title} id='ipv6' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

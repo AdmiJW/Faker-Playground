@@ -10,11 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, TextInput } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `
-    Generates a random css hex color code in aesthetically pleasing color palette.
-    Based on http://stackoverflow.com/questions/43044/algorithm-to-randomly-generate-an-aesthetically-pleasing-color-palette
-`;
-
 const Schema = z.object({
     blueBase: z.number().int().min(0).max(255),
     greenBase: z.number().int().min(0).max(255),
@@ -25,6 +20,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.color>;
 
 export function Color() {
+    const t = useDict().internet.color;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -43,7 +39,7 @@ export function Color() {
                 redBase: values.redBase,
             });
             setOutput(color);
-            toast.success('Faked color!');
+            toast.success(t.success);
         },
     });
 
@@ -61,36 +57,36 @@ export function Color() {
         formik.setFieldValue('redBase', faker.number.int({ min: 0, max: 255 }));
 
     return (
-        <FakerSection title='Color' id='color' tooltip={tooltip}>
+        <FakerSection title={t.title} id='color' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Blue Base'
+                    label={t.blueBaseLabel}
                     name='blueBase'
                     value={formik.values.blueBase.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.blueBase}
-                    tooltip='The optional base blue in range between 0 and 255.'
+                    tooltip={t.blueBaseTooltip}
                     randomFn={randomizeBlueBase}
                 />
                 <TextInput
                     type='number'
-                    label='Green Base'
+                    label={t.greenBaseLabel}
                     name='greenBase'
                     value={formik.values.greenBase.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.greenBase}
-                    tooltip='The optional base green in range between 0 and 255.'
+                    tooltip={t.greenBaseTooltip}
                     randomFn={randomizeGreenBase}
                 />
                 <TextInput
                     type='number'
-                    label='Red Base'
+                    label={t.redBaseLabel}
                     name='redBase'
                     value={formik.values.redBase.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.redBase}
-                    tooltip='The optional base red in range between 0 and 255.'
+                    tooltip={t.redBaseTooltip}
                     randomFn={randomizeRedBase}
                 />
             </div>

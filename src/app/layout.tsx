@@ -1,2 +1,2 @@
-export { metadata } from '@core/metadata';
+export { metadata, viewport } from '@core/metadata';
 export { RootLayout as default } from '@/core/components/RootLayout';

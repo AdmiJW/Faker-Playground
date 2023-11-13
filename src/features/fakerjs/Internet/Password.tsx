@@ -27,6 +27,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.internet.password>;
 
 export function Password() {
+    const t = useDict().internet.password;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -45,37 +46,37 @@ export function Password() {
                 prefix: values.prefix,
             });
             setOutput(password);
-            toast.success('Faked password!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Password' id='password' tooltip={tooltip}>
+        <FakerSection title={t.title} id='password' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Length'
+                    label={t.lengthLabel}
                     name='length'
                     value={formik.values.length.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.length}
-                    tooltip='The length of the password to generate.'
+                    tooltip={t.lengthTooltip}
                 />
                 <Checkbox
-                    label='Memorable'
-                    tooltip='Whether the generated password should be memorable.'
+                    label={t.memorableLabel}
+                    tooltip={t.memorableTooltip}
                     checked={formik.values.memorable}
                     onChange={(newValue) =>
                         formik.setFieldValue('memorable', newValue)
                     }
                 />
                 <TextInput
-                    label='Prefix'
+                    label={t.prefixLabel}
                     name='prefix'
                     value={formik.values.prefix ?? ''}
                     onChange={formik.handleChange}
                     error={formik.errors.prefix}
-                    tooltip='The prefix to use'
+                    tooltip={t.prefixTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

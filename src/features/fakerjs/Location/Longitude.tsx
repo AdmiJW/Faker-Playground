@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random longitude.`;
-
 const Schema = z.object({
     minMax: z.array(z.number().min(-180).max(180)).length(2),
     precision: z.number().nonnegative(),
@@ -26,6 +24,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.longitude>;
 
 export function Longitude() {
+    const t = useDict().location.longitude;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -43,30 +42,30 @@ export function Longitude() {
                 precision: values.precision,
             });
             setOutput(longitude);
-            toast.success('Faked longitude!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Longitude' id='longitude' tooltip={tooltip}>
+        <FakerSection title={t.title} id='longitude' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Slider
-                    label='Bound'
+                    label={t.boundLabel}
                     name='minMax'
                     value={formik.values.minMax}
                     onChange={formik.handleChange}
                     min={-180}
                     max={180}
                     step={0.001}
-                    tooltip='The bounds for the longitude to generate.'
+                    tooltip={t.boundTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Precision'
+                    label={t.precisionLabel}
                     name='precision'
                     value={formik.values.precision.toString()}
                     onChange={formik.handleChange}
-                    tooltip='The number of decimal points of precision for the longitude.'
+                    tooltip={t.precisionTooltip}
                     error={formik.errors.precision}
                 />
             </div>

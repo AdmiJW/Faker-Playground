@@ -10,26 +10,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random Litecoin address.`;
-
 type Output = ReturnType<typeof faker.finance.litecoinAddress>;
 
 export function LitecoinAddress() {
+    const t = useDict().finance.litecoinAddress;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.litecoinAddress());
-        toast.success('Faked litecoin address!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Litecoin Address'
-            id='litecoin-address'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='litecoin-address' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

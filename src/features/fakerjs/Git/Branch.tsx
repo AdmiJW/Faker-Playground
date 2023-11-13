@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random branch name.`;
-
 type Output = ReturnType<typeof faker.git.branch>;
 
 export function Branch() {
+    const t = useDict().git.branch;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.git.branch());
-        toast.success('Faked branch!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Branch' id='branch' tooltip={tooltip}>
+        <FakerSection title={t.title} id='branch' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

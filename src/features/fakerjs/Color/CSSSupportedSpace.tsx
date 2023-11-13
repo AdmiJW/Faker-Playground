@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random css supported color space name.`;
-
 type Output = ReturnType<typeof faker.color.cssSupportedSpace>;
 
 export function CSSSupportedSpace() {
+    const t = useDict().color.cssSupportedSpace;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.color.cssSupportedSpace());
-        toast.success('Faked css supported space!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='CSS Supported Space'
+            title={t.title}
             id='css-supported-space'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

@@ -16,8 +16,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random date between the given boundaries.`;
-
 const Schema = z.object({
     from: zodDate,
     to: zodDate,
@@ -27,6 +25,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.date.between>;
 
 export function Between() {
+    const t = useDict().date.between;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,8 +41,8 @@ export function Between() {
 
             if (from.isAfter(to)) {
                 setErrors({
-                    from: 'From date must be before to date',
-                    to: 'To date must be after from date',
+                    from: t.errorFromMustBeBeforeTo,
+                    to: t.errorToMustBeAfterFrom,
                 });
                 return;
             }
@@ -53,30 +52,30 @@ export function Between() {
                 to: to.toDate(),
             });
             setOutput(between);
-            toast.success('Faked between!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Between' id='between' tooltip={tooltip}>
+        <FakerSection title={t.title} id='between' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <DatePicker
-                    label='From'
+                    label={t.fromLabel}
                     name='from'
                     value={formik.values.from}
                     onChange={(newDate) =>
                         formik.setFieldValue('from', newDate)
                     }
                     error={formik.errors.from as string}
-                    tooltip='The early date boundary.'
+                    tooltip={t.fromTooltip}
                 />
                 <DatePicker
-                    label='To'
+                    label={t.toLabel}
                     name='to'
                     value={formik.values.to}
                     onChange={(newDate) => formik.setFieldValue('to', newDate)}
                     error={formik.errors.to as string}
-                    tooltip='The late date boundary.'
+                    tooltip={t.toTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random masked number.`;
-
 const Schema = z.object({
     ellipsis: z.boolean(),
     length: z.number().int().nonnegative(),
@@ -27,6 +25,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.maskedNumber>;
 
 export function MaskedNumber() {
+    const t = useDict().finance.maskedNumber;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -45,41 +44,37 @@ export function MaskedNumber() {
                 parens: values.parens,
             });
             setOutput(maskedNumber);
-            toast.success('Faked masked number!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection
-            title='Masked Number'
-            id='masked-number'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='masked-number' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Ellipsis'
+                    label={t.ellipsisLabel}
                     checked={formik.values.ellipsis}
                     onChange={(newValue) =>
                         formik.setFieldValue('ellipsis', newValue)
                     }
-                    tooltip='Whether to prefix the numbers with an ellipsis.'
+                    tooltip={t.ellipsisTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Length'
+                    label={t.lengthLabel}
                     name='length'
                     onChange={formik.handleChange}
-                    tooltip='The length of the unmasked number.'
+                    tooltip={t.lengthTooltip}
                     value={formik.values.length.toString()}
                     error={formik.errors.length}
                 />
                 <Checkbox
-                    label='Parens'
+                    label={t.parensLabel}
                     checked={formik.values.parens}
                     onChange={(newValue) =>
                         formik.setFieldValue('parens', newValue)
                     }
-                    tooltip='Whether to use surrounding parenthesis.'
+                    tooltip={t.parensTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random country name.`;
-
 type Output = ReturnType<typeof faker.location.country>;
 
 export function Country() {
+    const t = useDict().location.country;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.location.country());
-        toast.success('Faked country!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Country' id='country' tooltip={tooltip}>
+        <FakerSection title={t.title} id='country' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

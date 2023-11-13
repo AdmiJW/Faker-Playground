@@ -11,25 +11,24 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random credit card issuer.`;
-
 type Output = ReturnType<typeof faker.finance.creditCardIssuer>;
 
 export function CreditCardIssuer() {
+    const t = useDict().finance.creditCardIssuer;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.finance.creditCardIssuer());
-        toast.success('Faked credit card issuer!');
+        toast.success(t.success);
     };
 
     return (
         <FakerSection
-            title='Credit Card Issuer'
+            title={t.title}
             id='credit-card-issuer'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />

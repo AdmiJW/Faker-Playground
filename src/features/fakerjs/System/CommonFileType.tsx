@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a commonly used file type.`;
-
 type Output = ReturnType<typeof faker.system.commonFileType>;
 
 export function CommonFileType() {
+    const t = useDict().system.commonFileType;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.system.commonFileType());
-        toast.success('Faked common file type!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Common File Type'
-            id='common-file-type'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='common-file-type' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

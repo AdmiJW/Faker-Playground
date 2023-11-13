@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random commit message.`;
-
 type Output = ReturnType<typeof faker.git.commitMessage>;
 
 export function CommitMessage() {
+    const t = useDict().git.commitMessage;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.git.commitMessage());
-        toast.success('Faked commit message!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Commit Message'
-            id='commit-message'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='commit-message' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

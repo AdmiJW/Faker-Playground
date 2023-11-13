@@ -11,26 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random building number.`;
-
 type Output = ReturnType<typeof faker.location.buildingNumber>;
 
 export function BuildingNumber() {
+    const t = useDict().location.buildingNumber;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.location.buildingNumber());
-        toast.success('Faked building number!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection
-            title='Building Number'
-            id='building-number'
-            tooltip={tooltip}
-        >
+        <FakerSection title={t.title} id='building-number' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

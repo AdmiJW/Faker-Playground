@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random hacker/IT abbreviation.`;
-
 type Output = ReturnType<typeof faker.hacker.abbreviation>;
 
 export function Abbreviation() {
+    const t = useDict().hacker.abbreviation;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.hacker.abbreviation());
-        toast.success('Faked abbreviation!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Abbreviation' id='abbreviation' tooltip={tooltip}>
+        <FakerSection title={t.title} id='abbreviation' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

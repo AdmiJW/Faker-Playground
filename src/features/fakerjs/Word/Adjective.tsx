@@ -14,8 +14,7 @@ import {
     Select,
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
-
-const tooltip = `Returns an adjective of random or optionally specified length.`;
+import { getAlertTitleUtilityClass } from '@mui/material';
 
 const Schema = z.object({
     min: z.number().int().nonnegative(),
@@ -27,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.word.adjective>;
 
 export function Adjective() {
+    const t = useDict().word.adjective;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -42,8 +42,8 @@ export function Adjective() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -56,49 +56,43 @@ export function Adjective() {
                 strategy: values.strategy,
             });
             setOutput(adjective);
-            toast.success('Faked adjective!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Adjective' id='adjective' tooltip={tooltip}>
+        <FakerSection title={t.title} id='adjective' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The expected length of the word.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The expected length of the word.'
+                    tooltip={t.maxTooltip}
                 />
                 <Select
-                    label='Strategy'
+                    label={t.strategyLabel}
                     name='strategy'
                     value={formik.values.strategy}
                     onChange={formik.handleChange}
-                    tooltip='The strategy to apply when no words with a matching length are found. Available error handling strategies:
-                        fail: Throws an error if no words with the given length are found.
-                        shortest: Returns any of the shortest words.
-                        closest: Returns any of the words closest to the given length.
-                        longest: Returns any of the longest words.
-                        any-length: Returns a word with any length.
-                    '
+                    tooltip={t.strategyTooltip}
                     options={[
-                        { label: 'Any length', value: 'any-length' },
-                        { label: 'Closest', value: 'closest' },
-                        { label: 'Fail', value: 'fail' },
-                        { label: 'Longest', value: 'longest' },
-                        { label: 'Shortest', value: 'shortest' },
+                        { label: t.optionAnyLength, value: 'any-length' },
+                        { label: t.optionClosest, value: 'closest' },
+                        { label: t.optionFail, value: 'fail' },
+                        { label: t.optionLongest, value: 'longest' },
+                        { label: t.optionShortest, value: 'shortest' },
                     ]}
                 />
             </div>

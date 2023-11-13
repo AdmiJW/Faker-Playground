@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random network interface.`;
-
 const Schema = z.object({
     interfaceSchema: z.enum(['index', 'mac', 'pci', 'slot']),
     interfaceType: z.enum(['en', 'wl', 'ww']),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.system.networkInterface>;
 
 export function NetworkInterface() {
+    const t = useDict().system.networkInterface;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,40 +36,40 @@ export function NetworkInterface() {
                 interfaceType: values.interfaceType,
             });
             setOutput(networkInterface);
-            toast.success('Faked network interface!');
+            toast.success(t.success);
         },
     });
 
     return (
         <FakerSection
-            title='Network Interface'
+            title={t.title}
             id='network-interface'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Interface Schema'
+                    label={t.interfaceSchemaLabel}
                     name='interfaceSchema'
                     onChange={formik.handleChange}
-                    tooltip='The interface schema. Can be one of index, slot, mac, pci.'
+                    tooltip={t.interfaceSchemaTooltip}
                     value={formik.values.interfaceSchema}
                     options={[
-                        { label: 'Index', value: 'index' },
-                        { label: 'Mac', value: 'mac' },
-                        { label: 'PCI', value: 'pci' },
-                        { label: 'Slot', value: 'slot' },
+                        { label: t.optionIndex, value: 'index' },
+                        { label: t.optionMac, value: 'mac' },
+                        { label: t.optionPci, value: 'pci' },
+                        { label: t.optionSlot, value: 'slot' },
                     ]}
                 />
                 <Select
-                    label='Interface Type'
+                    label={t.interfaceTypeLabel}
                     name='interfaceType'
                     onChange={formik.handleChange}
-                    tooltip='The interface type. Can be one of en, wl, ww.'
+                    tooltip={t.interfaceTypeTooltip}
                     value={formik.values.interfaceType}
                     options={[
-                        { label: 'en', value: 'en' },
-                        { label: 'wl', value: 'wl' },
-                        { label: 'ww', value: 'ww' },
+                        { label: t.optionEn, value: 'en' },
+                        { label: t.optionWl, value: 'wl' },
+                        { label: t.optionWw, value: 'ww' },
                     ]}
                 />
             </div>

@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a mime-type.`;
-
 type Output = ReturnType<typeof faker.system.mimeType>;
 
 export function MimeType() {
+    const t = useDict().system.mimeType;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.system.mimeType());
-        toast.success('Faked mime type!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Mime Type' id='mime-type' tooltip={tooltip}>
+        <FakerSection title={t.title} id='mime-type' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

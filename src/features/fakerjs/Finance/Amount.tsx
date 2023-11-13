@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random amount between the given bounds (inclusive).`;
-
 const Schema = z.object({
     autoFormat: z.boolean(),
     dec: z.number().int().nonnegative(),
@@ -29,6 +27,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.finance.amount>;
 
 export function Amount() {
+    const t = useDict().finance.amount;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -46,8 +45,8 @@ export function Amount() {
             const isMinGreaterThanMax = values.min > values.max;
             if (isMinGreaterThanMax) {
                 setErrors({
-                    max: 'Max must be greater than min.',
-                    min: 'Min must be less than max.',
+                    max: t.errorMaxMustBeGreaterThanMin,
+                    min: t.errorMinMustBeLessThanMax,
                 });
                 return;
             }
@@ -60,53 +59,53 @@ export function Amount() {
                 symbol: values.symbol,
             });
             setOutput(amount);
-            toast.success('Faked amount!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Amount' id='amount' tooltip={tooltip}>
+        <FakerSection title={t.title} id='amount' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Auto Format'
+                    label={t.autoFormatLabel}
                     checked={formik.values.autoFormat}
                     onChange={(newValue) =>
                         formik.setFieldValue('autoFormat', newValue)
                     }
-                    tooltip='If true this method will use Number.toLocaleString(). Otherwise it will use Number.toFixed().'
+                    tooltip={t.autoFormatTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Decimals'
+                    label={t.decimalsLabel}
                     name='dec'
                     onChange={formik.handleChange}
-                    tooltip='The number of decimal places for the amount.'
+                    tooltip={t.decimalsTooltip}
                     value={formik.values.dec.toString()}
                     error={formik.errors.dec}
                 />
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     onChange={formik.handleChange}
-                    tooltip='The lower bound for the amount.'
+                    tooltip={t.minTooltip}
                     value={formik.values.min.toString()}
                     error={formik.errors.min}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     onChange={formik.handleChange}
-                    tooltip='The upper bound for the amount.'
+                    tooltip={t.maxTooltip}
                     value={formik.values.max.toString()}
                     error={formik.errors.max}
                 />
                 <TextInput
-                    label='Symbol'
+                    label={t.symbolLabel}
                     name='symbol'
                     onChange={formik.handleChange}
-                    tooltip='The symbol used to prefix the amount.'
+                    tooltip={t.symbolTooltip}
                     value={formik.values.symbol || ''}
                     error={formik.errors.symbol}
                 />

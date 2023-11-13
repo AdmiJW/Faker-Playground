@@ -15,8 +15,6 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generating a string consisting of alpha characters and digits.`;
-
 const Schema = z.object({
     casing: z.enum(['lower', 'upper', 'mixed']),
     exclude: z.string().optional(),
@@ -28,6 +26,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.string.alphanumeric>;
 
 export function Alphanumeric() {
+    const t = useDict().string.alphanumeric;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -44,8 +43,8 @@ export function Alphanumeric() {
             const isMinBiggerThanMax = values.min > values.max;
             if (isMinBiggerThanMax) {
                 setErrors({
-                    min: 'Min must be smaller than max.',
-                    max: 'Max must be bigger than min.',
+                    min: t.errorMinMustBeLessThanMax,
+                    max: t.errorMaxMustBeGreaterThanMin,
                 });
                 return;
             }
@@ -59,50 +58,50 @@ export function Alphanumeric() {
                 },
             });
             setOutput(alphanumeric);
-            toast.success('Faked alphanumeric!');
+            toast.success(t.success);
         },
     });
 
     return (
-        <FakerSection title='Alphanumeric' id='alphanumeric' tooltip={tooltip}>
+        <FakerSection title={t.title} id='alphanumeric' tooltip={t.tooltip}>
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Casing'
+                    label={t.casingLabel}
                     name='casing'
                     onChange={formik.handleChange}
-                    tooltip='The casing of the characters.'
+                    tooltip={t.casingTooltip}
                     value={formik.values.casing}
                     options={[
-                        { label: 'Lower', value: 'lower' },
-                        { label: 'Upper', value: 'upper' },
-                        { label: 'Mixed', value: 'mixed' },
+                        { label: t.optionLower, value: 'lower' },
+                        { label: t.optionUpper, value: 'upper' },
+                        { label: t.optionMixed, value: 'mixed' },
                     ]}
                 />
                 <TextInput
-                    label='Exclude'
+                    label={t.excludeLabel}
                     name='exclude'
                     onChange={formik.handleChange}
                     error={formik.errors.exclude}
-                    tooltip='An array of characters and digits which should be excluded in the generated string.'
+                    tooltip={t.excludeTooltip}
                     value={formik.values.exclude || ''}
                 />
                 <TextInput
                     type='number'
-                    label='Min'
+                    label={t.minLabel}
                     name='min'
                     value={formik.values.min.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.min}
-                    tooltip='The number or range of characters and digits to generate.'
+                    tooltip={t.minTooltip}
                 />
                 <TextInput
                     type='number'
-                    label='Max'
+                    label={t.maxLabel}
                     name='max'
                     value={formik.values.max.toString()}
                     onChange={formik.handleChange}
                     error={formik.errors.max}
-                    tooltip='The number or range of characters and digits to generate.'
+                    tooltip={t.maxTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

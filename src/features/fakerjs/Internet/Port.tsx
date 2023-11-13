@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Generates a random port number.`;
-
 type Output = ReturnType<typeof faker.internet.port>;
 
 export function Port() {
+    const t = useDict().internet.port;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.internet.port());
-        toast.success('Faked port!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Port' id='port' tooltip={tooltip}>
+        <FakerSection title={t.title} id='port' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Select } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random color based on CSS color space specified.`;
-
 const Schema = z.object({
     format: z.enum(['binary', 'css', 'decimal']),
     space: z.enum(['a98-rgb', 'display-p3', 'prophoto-rgb', 'rec2020', 'sRGB']),
@@ -21,6 +19,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.color.colorByCSSColorSpace>;
 
 export function ColorByCSSColorSpace() {
+    const t = useDict().color.colorByCssColorSpace;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -37,42 +36,42 @@ export function ColorByCSSColorSpace() {
                 space: values.space,
             });
             setOutput(colorByCSSColorSpace);
-            toast.success('Faked color by CSS color space!');
+            toast.success(t.success);
         },
     });
 
     return (
         <FakerSection
-            title='Color By CSS Color Space'
+            title={t.title}
             id='color-by-css-color-space'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <Select
-                    label='Format'
+                    label={t.formatLabel}
                     value={formik.values.format}
                     onChange={formik.handleChange}
                     name='format'
                     options={[
-                        { value: 'binary', label: 'Binary' },
-                        { value: 'css', label: 'CSS' },
-                        { value: 'decimal', label: 'Decimal' },
+                        { value: 'binary', label: t.optionBinary },
+                        { value: 'css', label: t.optionCss },
+                        { value: 'decimal', label: t.optionDecimal },
                     ]}
-                    tooltip='Format of generated color.'
+                    tooltip={t.formatTooltip}
                 />
                 <Select
-                    label='Space'
+                    label={t.spaceLabel}
                     value={formik.values.space}
                     onChange={formik.handleChange}
                     name='space'
                     options={[
-                        { value: 'a98-rgb', label: 'A98 RGB' },
-                        { value: 'display-p3', label: 'Display P3' },
-                        { value: 'prophoto-rgb', label: 'ProPhoto RGB' },
-                        { value: 'rec2020', label: 'Rec 2020' },
-                        { value: 'sRGB', label: 'sRGB' },
+                        { value: 'a98-rgb', label: t.optionA98Rgb },
+                        { value: 'display-p3', label: t.optionDisplayP3 },
+                        { value: 'prophoto-rgb', label: t.optionProphotoRgb },
+                        { value: 'rec2020', label: t.optionRec2020 },
+                        { value: 'sRGB', label: t.optionSrgb },
                     ]}
-                    tooltip='Color space to generate the color for.'
+                    tooltip={t.spaceTooltip}
                 />
             </div>
             <Output onFake={formik.handleSubmit} output={output} />

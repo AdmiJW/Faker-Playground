@@ -11,22 +11,21 @@ import {
 } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a department inside a shop.`;
-
 type Output = ReturnType<typeof faker.commerce.department>;
 
 export function Department() {
+    const t = useDict().commerce.department;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
 
     const onFake = () => {
         setOutput(faker.commerce.department());
-        toast.success('Faked department!');
+        toast.success(t.success);
     };
 
     return (
-        <FakerSection title='Department' id='department' tooltip={tooltip}>
+        <FakerSection title={t.title} id='department' tooltip={t.tooltip}>
             <NoParamsNeeded />
             <Output onFake={onFake} output={output} />
         </FakerSection>

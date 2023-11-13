@@ -10,8 +10,6 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { FakerSection, Output, Checkbox } from '@core/components/FakerSection';
 import { useDict, useFaker } from '@locale';
 
-const tooltip = `Returns a random ordinal direction (northwest, southeast, etc).`;
-
 const Schema = z.object({
     abbreviated: z.boolean(),
 });
@@ -20,6 +18,7 @@ type State = z.infer<typeof Schema>;
 type Output = ReturnType<typeof faker.location.ordinalDirection>;
 
 export function OrdinalDirection() {
+    const t = useDict().location.ordinalDirection;
     const faker = useFaker();
 
     const [output, setOutput] = useState<Output>();
@@ -34,20 +33,20 @@ export function OrdinalDirection() {
                 abbreviated: values.abbreviated,
             });
             setOutput(ordinalDirection);
-            toast.success('Faked ordinal direction!');
+            toast.success(t.success);
         },
     });
 
     return (
         <FakerSection
-            title='Ordinal Direction'
+            title={t.title}
             id='ordinal-direction'
-            tooltip={tooltip}
+            tooltip={t.tooltip}
         >
             <div className='flex flex-1 flex-col gap-4'>
                 <Checkbox
-                    label='Abbreviated'
-                    tooltip='If true this will return abbreviated directions (NW, SE, etc). Otherwise this will return the long name.'
+                    label={t.abbreviatedLabel}
+                    tooltip={t.abbreviatedTooltip}
                     checked={formik.values.abbreviated}
                     onChange={(newValue) =>
                         formik.setFieldValue('abbreviated', newValue)
